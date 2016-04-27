@@ -1,5 +1,6 @@
 # Instructabilty
-A Discord4J Command API Module
+Instructability is a Discord4J Command API Module written in Java 8.
+Enables a simple yet complex way of adding Commands into your Discord4J Bot.
 
 ## Usage
 First, add Instructability as a dependency to your project.
@@ -41,7 +42,7 @@ Instructables.getRegistry()
 ```
 ### Cool stuff
 ```
-.testcommand "super long argument here" secondargument "another long argument"
+.testcommand "super long argument here" secondargument 'another long argument'
 ```
 Commands are able to have spacings in arguments and executed as shown above.
 ```
