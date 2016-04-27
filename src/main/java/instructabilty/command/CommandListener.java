@@ -1,6 +1,7 @@
 package instructabilty.command;
 
 import instructabilty.Instructables;
+import sx.blah.discord.Discord4J;
 import sx.blah.discord.api.IListener;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.util.MessageBuilder;
@@ -15,7 +16,6 @@ public class CommandListener implements IListener<MessageReceivedEvent> {
 
 		if (raw.startsWith(pre)) {
 			try {
-				// TODO: Callback (?)
 				reg.execute(
 						event,
 						new MessageBuilder(event.getClient())
@@ -24,7 +24,7 @@ public class CommandListener implements IListener<MessageReceivedEvent> {
 										.mention() + ",\r\n\r\n"),
 						raw.substring(pre.length(), raw.length()));
 			} catch (Exception e) {
-
+				Discord4J.LOGGER.debug("Failed to execute command '" + raw + "'", e);
 			}
 		}
 	}
