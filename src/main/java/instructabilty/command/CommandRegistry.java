@@ -9,6 +9,8 @@ import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.util.MessageBuilder;
 
 public class CommandRegistry extends Command {
+	
+	private String commandPrefix = ".";
 
 	public CommandRegistry() {
 		super(new CommandBuilder(".").buildOptions());
@@ -46,6 +48,14 @@ public class CommandRegistry extends Command {
 
 		if (cmd.isPresent())
 			super.execute(event, msg, args);
+	}
+
+	public String getCommandPrefix() {
+		return commandPrefix;
+	}
+
+	public void setCommandPrefix(String commandPrefix) {
+		this.commandPrefix = commandPrefix;
 	}
 
 }

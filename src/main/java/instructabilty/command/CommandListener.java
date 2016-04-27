@@ -9,13 +9,14 @@ public class CommandListener implements IListener<MessageReceivedEvent> {
 
 	@Override
 	public void handle(MessageReceivedEvent event) {
+		CommandRegistry reg = Instructables.getRegistry();
 		String raw = event.getMessage().getContent();
-		String pre = ".";
+		String pre = reg.getCommandPrefix();
 
 		if (raw.startsWith(pre)) {
 			try {
 				// TODO: Callback (?)
-				Instructables.getRegistry().execute(
+				reg.execute(
 						event,
 						new MessageBuilder(event.getClient())
 								.withChannel(event.getMessage().getChannel())
