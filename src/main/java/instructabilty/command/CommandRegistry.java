@@ -9,7 +9,7 @@ import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.util.MessageBuilder;
 
 public class CommandRegistry extends Command {
-	
+
 	private String commandPrefix = ".";
 
 	public CommandRegistry() {

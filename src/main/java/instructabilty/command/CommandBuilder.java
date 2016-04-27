@@ -3,7 +3,11 @@ package instructabilty.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import sx.blah.discord.modules.IModule;
+
 public class CommandBuilder {
+	private IModule module;
+
 	private final String name;
 	private String desc;
 	private List<String> aliases;
@@ -12,12 +16,19 @@ public class CommandBuilder {
 	private boolean hookDefaults;
 
 	public CommandBuilder(String name) {
+		this.module = null;
+
 		this.name = name;
 		this.desc = "No description";
 		this.aliases = new ArrayList<>();
 
 		this.subcommands = new ArrayList<>();
 		this.hookDefaults = true;
+	}
+	
+	public CommandBuilder module(IModule module) {
+		this.module = module;
+		return this;
 	}
 
 	public CommandBuilder desc(String desc) {
@@ -47,6 +58,7 @@ public class CommandBuilder {
 
 	public CommandOptions buildOptions(final CommandExecutable exe) {
 		return new CommandOptions(
+				module,
 				name,
 				desc,
 				aliases,
@@ -56,7 +68,8 @@ public class CommandBuilder {
 	}
 
 	public Command build() {
-		return new Command(buildOptions());
+		return build((event, msg, args) -> {
+		});
 	}
 
 	public Command build(final CommandExecutable exe) {

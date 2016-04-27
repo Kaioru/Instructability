@@ -55,11 +55,11 @@ public class Command implements CommandExecutable {
 	public void registerCommand(Command cmd) {
 		getOptions().getSubcommands().add(cmd);
 	}
-	
+
 	public void deregisterCommand(Command cmd) {
 		getOptions().getSubcommands().remove(cmd);
 	}
-	
+
 	public void clearCommands() {
 		getOptions().getSubcommands().clear();
 	}

@@ -1,8 +1,12 @@
 package instructabilty.command;
 
 import java.util.List;
+import java.util.Optional;
+
+import sx.blah.discord.modules.IModule;
 
 public class CommandOptions {
+	private final IModule module;
 
 	private final String name;
 	private final String desc;
@@ -14,12 +18,15 @@ public class CommandOptions {
 	private final CommandExecutable executable;
 
 	public CommandOptions(
+			IModule module,
 			String name,
 			String desc,
 			List<String> aliases,
 			List<Command> subcommands,
 			boolean hookDefaults,
 			CommandExecutable executable) {
+		this.module = module;
+
 		this.name = name;
 		this.desc = desc;
 		this.aliases = aliases;
@@ -52,6 +59,10 @@ public class CommandOptions {
 
 	public CommandExecutable getExecutable() {
 		return executable;
+	}
+
+	public Optional<IModule> getModule() {
+		return Optional.ofNullable(module);
 	}
 
 }

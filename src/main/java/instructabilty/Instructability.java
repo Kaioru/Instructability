@@ -7,11 +7,13 @@ import sx.blah.discord.modules.IModule;
 
 public class Instructability implements IModule {
 
+	private static Instructability instance;
 	private IDiscordClient client;
 	private CommandListener listener = new CommandListener();
 
 	@Override
 	public boolean enable(IDiscordClient client) {
+		Instructability.instance = this;
 		this.client = client;
 
 		client.getDispatcher().registerListener(listener);
@@ -43,6 +45,10 @@ public class Instructability implements IModule {
 	@Override
 	public String getMinimumDiscord4JVersion() {
 		return "2.4.6";
+	}
+
+	public static Instructability getInstance() {
+		return instance;
 	}
 
 }
