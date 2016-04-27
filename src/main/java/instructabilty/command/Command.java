@@ -20,6 +20,14 @@ public class Command implements CommandExecutable {
 		}
 	}
 
+	public void clearCommands() {
+		getOptions().getSubcommands().clear();
+	}
+
+	public void deregisterCommand(Command cmd) {
+		getOptions().getSubcommands().remove(cmd);
+	}
+
 	@Override
 	public void execute(
 			MessageReceivedEvent event,
@@ -38,10 +46,6 @@ public class Command implements CommandExecutable {
 		}
 	}
 
-	public CommandOptions getOptions() {
-		return options;
-	}
-
 	public Optional<Command> getCommand(String name) {
 		return options.getSubcommands().stream().filter(cmd -> {
 			CommandOptions opt = cmd.getOptions();
@@ -52,16 +56,12 @@ public class Command implements CommandExecutable {
 		}).findFirst();
 	}
 
+	public CommandOptions getOptions() {
+		return options;
+	}
+
 	public void registerCommand(Command cmd) {
 		getOptions().getSubcommands().add(cmd);
-	}
-
-	public void deregisterCommand(Command cmd) {
-		getOptions().getSubcommands().remove(cmd);
-	}
-
-	public void clearCommands() {
-		getOptions().getSubcommands().clear();
 	}
 
 }
