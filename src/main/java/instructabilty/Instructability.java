@@ -11,6 +11,10 @@ public class Instructability implements IModule {
 	private IDiscordClient client;
 	private CommandListener listener = new CommandListener();
 
+	public static Instructability getInstance() {
+		return instance;
+	}
+
 	@Override
 	public boolean enable(IDiscordClient client) {
 		Instructability.instance = this;
@@ -39,16 +43,12 @@ public class Instructability implements IModule {
 
 	@Override
 	public String getVersion() {
-		return "1.0";
+		return "0.0.1";
 	}
 
 	@Override
 	public String getMinimumDiscord4JVersion() {
 		return "2.4.6";
-	}
-
-	public static Instructability getInstance() {
-		return instance;
 	}
 
 }
