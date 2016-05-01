@@ -53,7 +53,10 @@ public class CommandBuilder {
 	}
 
 	public CommandBuilder permission(String permission) {
-		this.permission = new CommandPermission(permission);
+		if (permission.contains("."))
+			this.permission = new CommandPermission(permission);
+		else
+			this.permission = new CommandPermission(permission, new ArrayList<>());
 		return this;
 	}
 

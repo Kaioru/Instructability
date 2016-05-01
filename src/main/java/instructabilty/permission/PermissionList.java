@@ -19,16 +19,22 @@ public class PermissionList {
 		this.rolePermissions = new HashMap();
 	}
 
-	public Map<String, Permissions> getUserPermissions() {
-		return userPermissions;
+	public Permissions getUserPermissions(String id) {
+		if (!userPermissions.containsKey(id))
+			userPermissions.put(id, new Permissions());
+
+		return userPermissions.get(id);
 	}
 
-	public Map<String, Permissions> getRolePermissions() {
-		return rolePermissions;
+	public Permissions getRolePermissions(String id) {
+		if (!rolePermissions.containsKey(id))
+			rolePermissions.put(id, new Permissions());
+
+		return rolePermissions.get(id);
 	}
 
 	public boolean checkPermissions(IUser user, IGuild guild, CommandPermission perm) {
-		return userPermissions.get(user.getID())
+		return getUserPermissions(user.getID())
 				.getPermissions()
 				.stream()
 				.anyMatch(p -> {
@@ -38,7 +44,7 @@ public class PermissionList {
 				||
 				user.getRolesForGuild(guild)
 						.stream()
-						.anyMatch(r -> rolePermissions.get(r)
+						.anyMatch(r -> getRolePermissions(r.getID())
 								.getPermissions()
 								.stream()
 								.anyMatch(p -> {
