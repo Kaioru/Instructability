@@ -1,8 +1,8 @@
 package instructabilty.command;
 
-import java.util.stream.Stream;
-
 import sx.blah.discord.util.MessageBuilder.Styles;
+
+import java.util.stream.Stream;
 
 public class Commands {
 
@@ -14,7 +14,7 @@ public class Commands {
 					msg.appendContent("Commands:\r\n\r\n", Styles.BOLD);
 
 					Stream<Command> stream = p.getOptions()
-							.getSubcommands()
+							.getSubCommands()
 							.stream()
 							.filter(cmd -> cmd.getOptions().isHookDefaults());
 
@@ -47,7 +47,7 @@ public class Commands {
 					msg.appendContent("Aliases:\r\n\r\n", Styles.BOLD);
 
 					p.getOptions()
-							.getSubcommands()
+							.getSubCommands()
 							.forEach(sub -> {
 								StringBuilder content = new StringBuilder();
 								CommandOptions opt = sub.getOptions();

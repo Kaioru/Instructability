@@ -1,19 +1,20 @@
 package instructabilty.command;
 
+import sx.blah.discord.modules.IModule;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import sx.blah.discord.modules.IModule;
-
 public class CommandBuilder {
-	private IModule module;
-
 	private final String name;
+	private IModule module;
 	private String desc;
 	private List<String> aliases;
 
-	private List<Command> subcommands;
+	private List<Command> subCommands;
 	private boolean hookDefaults;
+
+	private CommandPermission permission;
 
 	public CommandBuilder(String name) {
 		this.module = null;
@@ -22,7 +23,7 @@ public class CommandBuilder {
 		this.desc = "No description";
 		this.aliases = new ArrayList<>();
 
-		this.subcommands = new ArrayList<>();
+		this.subCommands = new ArrayList<>();
 		this.hookDefaults = true;
 	}
 	
@@ -42,12 +43,17 @@ public class CommandBuilder {
 	}
 
 	public CommandBuilder command(Command command) {
-		this.subcommands.add(command);
+		this.subCommands.add(command);
 		return this;
 	}
 
 	public CommandBuilder skipHookingDefaults() {
 		this.hookDefaults = false;
+		return this;
+	}
+
+	public CommandBuilder permission(String permission) {
+		this.permission = new CommandPermission(permission);
 		return this;
 	}
 
@@ -62,8 +68,9 @@ public class CommandBuilder {
 				name,
 				desc,
 				aliases,
-				subcommands,
+				subCommands,
 				hookDefaults,
+				permission,
 				exe);
 	}
 

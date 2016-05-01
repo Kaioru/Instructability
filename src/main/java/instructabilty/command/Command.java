@@ -1,11 +1,12 @@
 package instructabilty.command;
 
+import instructabilty.Instructables;
+import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
+import sx.blah.discord.util.MessageBuilder;
+
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
-import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
-import sx.blah.discord.util.MessageBuilder;
 
 public class Command implements CommandExecutable {
 
@@ -15,17 +16,17 @@ public class Command implements CommandExecutable {
 		this.options = options;
 
 		if (options.isHookDefaults()) {
-			options.getSubcommands().add(Commands.getHelpCommand(this));
-			options.getSubcommands().add(Commands.getAliasCommand(this));
+			options.getSubCommands().add(Commands.getHelpCommand(this));
+			options.getSubCommands().add(Commands.getAliasCommand(this));
 		}
 	}
 
 	public void clearCommands() {
-		getOptions().getSubcommands().clear();
+		getOptions().getSubCommands().clear();
 	}
 
 	public void deregisterCommand(Command cmd) {
-		getOptions().getSubcommands().remove(cmd);
+		getOptions().getSubCommands().remove(cmd);
 	}
 
 	@Override
@@ -42,17 +43,29 @@ public class Command implements CommandExecutable {
 			} else
 				throw new NoSuchElementException();
 		} catch (NoSuchElementException e) {
+			if (getOptions().getPermission().isPresent()) {
+				CommandPermission reqPermission = getOptions().getPermission().get();
+
+				if (!Instructables.getPermissionRegistry()
+						.getForGuild(event.getMessage().getGuild().getID())
+						.checkPermissions(event.getMessage().getAuthor(), event.getMessage().getGuild(), reqPermission)) {
+					msg.appendContent("You do not have enough permissions to use the command.");
+					msg.build();
+					return;
+				}
+			}
+
 			getOptions().getExecutable().execute(event, msg, args);
 		}
 	}
 
 	public Optional<Command> getCommand(String name) {
-		return options.getSubcommands().stream().filter(cmd -> {
+		return options.getSubCommands().stream().filter(cmd -> {
 			CommandOptions opt = cmd.getOptions();
 
 			return opt.getName().startsWith(name)
 					|| opt.getAliases().stream()
-							.anyMatch(s -> s.startsWith(name));
+					.anyMatch(s -> s.startsWith(name));
 		}).findFirst();
 	}
 
@@ -61,7 +74,7 @@ public class Command implements CommandExecutable {
 	}
 
 	public void registerCommand(Command cmd) {
-		getOptions().getSubcommands().add(cmd);
+		getOptions().getSubCommands().add(cmd);
 	}
 
 }
