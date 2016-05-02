@@ -45,14 +45,14 @@ public class PermissionList {
 		};
 
 		return getUserPermissions(user.getID())
-				.getPermissions()
+				.get()
 				.stream()
 				.anyMatch(func)
 				||
 				user.getRolesForGuild(guild)
 						.stream()
 						.anyMatch(r -> getRolePermissions(r.getID())
-								.getPermissions()
+								.get()
 								.stream()
 								.anyMatch(func));
 	}
