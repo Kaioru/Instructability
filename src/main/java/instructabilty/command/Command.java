@@ -2,35 +2,49 @@ package instructabilty.command;
 
 import instructabilty.Instructables;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
+import sx.blah.discord.modules.IModule;
 import sx.blah.discord.util.MessageBuilder;
 
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
-public class Command implements CommandExecutable {
+public interface Command extends CommandExecutable {
 
-	private final CommandOptions options;
+	String getName();
 
-	public Command(CommandOptions options) {
-		this.options = options;
+	String getDesc();
 
-		if (options.isHookDefaults()) {
-			options.getSubCommands().add(Commands.getHelpCommand(this));
-			options.getSubCommands().add(Commands.getAliasCommand(this));
-		}
+	default List<String> getAliases() {
+		return new ArrayList<>();
 	}
 
-	public void clearCommands() {
-		getOptions().getSubCommands().clear();
+	default List<Command> getCommands() {
+		return new ArrayList<>();
 	}
 
-	public void deregisterCommand(Command cmd) {
-		getOptions().getSubCommands().remove(cmd);
+	default Optional<Command> getCommand(String name) {
+		return getCommands().stream().filter(cmd -> getName()
+				.startsWith(name)
+				|| getAliases().stream()
+				.anyMatch(s -> s.startsWith(name))).findFirst();
+	}
+
+	default Optional<IModule> getModule() {
+		return Optional.empty();
+	}
+
+	default Optional<CommandPermission> getPermission() {
+		return Optional.empty();
+	}
+
+	CommandExecutable getExecutable();
+
+	default void addHelperCommands() {
+		getCommands().add(Commands.getHelpCommand(this));
+		getCommands().add(Commands.getAliasCommand(this));
 	}
 
 	@Override
-	public void execute(
+	default void execute(
 			MessageReceivedEvent event,
 			MessageBuilder msg,
 			LinkedList<String> args) throws Exception {
@@ -43,8 +57,8 @@ public class Command implements CommandExecutable {
 			} else
 				throw new NoSuchElementException();
 		} catch (NoSuchElementException e) {
-			if (getOptions().getPermission().isPresent()) {
-				CommandPermission reqPermission = getOptions().getPermission().get();
+			if (getPermission().isPresent()) {
+				CommandPermission reqPermission = getPermission().get();
 
 				if (!Instructables.getPermissionRegistry()
 						.getForGuild(event.getMessage().getGuild().getID())
@@ -55,26 +69,8 @@ public class Command implements CommandExecutable {
 				}
 			}
 
-			getOptions().getExecutable().execute(event, msg, args);
+			getExecutable().execute(event, msg, args);
 		}
-	}
-
-	public Optional<Command> getCommand(String name) {
-		return options.getSubCommands().stream().filter(cmd -> {
-			CommandOptions opt = cmd.getOptions();
-
-			return opt.getName().startsWith(name)
-					|| opt.getAliases().stream()
-					.anyMatch(s -> s.startsWith(name));
-		}).findFirst();
-	}
-
-	public CommandOptions getOptions() {
-		return options;
-	}
-
-	public void registerCommand(Command cmd) {
-		getOptions().getSubCommands().add(cmd);
 	}
 
 }

@@ -1,36 +1,33 @@
 package instructabilty.command;
 
+import instructabilty.command.builder.BuiltCommand;
+import instructabilty.command.builder.CommandBuilder;
 import sx.blah.discord.util.MessageBuilder.Styles;
-
-import java.util.stream.Stream;
 
 public class Commands {
 
-	public static Command getHelpCommand(Command p) {
+	public static BuiltCommand getHelpCommand(Command p) {
 		return new CommandBuilder("help")
 				.alias("?")
-				.skipHookingDefaults()
+				.noHelperCommands()
 				.build((event, msg, args) -> {
 					msg.appendContent("Commands:\r\n\r\n", Styles.BOLD);
 
-					Stream<Command> stream = p.getOptions()
-							.getSubCommands()
+					p.getCommands()
 							.stream()
-							.filter(cmd -> cmd.getOptions().isHookDefaults());
+							//.filter(?)
+							.forEach(sub -> {
+								StringBuilder content = new StringBuilder();
 
-					stream.forEach(sub -> {
-						StringBuilder content = new StringBuilder();
-						CommandOptions opt = sub.getOptions();
+								content.append("• ");
+								content.append(sub.getName());
+								content.append("\t");
+								content.append(sub.getDesc());
 
-						content.append("• ");
-						content.append(opt.getName());
-						content.append("\t");
-						content.append(opt.getDesc());
-
-						msg.appendContent(content.toString(),
-								Styles.INLINE_CODE)
-								.appendContent("\r\n");
-					});
+								msg.appendContent(content.toString(),
+										Styles.INLINE_CODE)
+										.appendContent("\r\n");
+							});
 
 					msg.appendContent("\r\n");
 					msg.appendContent("For more detailed information use ")
@@ -40,22 +37,20 @@ public class Commands {
 				});
 	}
 
-	public static Command getAliasCommand(Command p) {
+	public static BuiltCommand getAliasCommand(Command p) {
 		return new CommandBuilder("alias")
-				.skipHookingDefaults()
+				.noHelperCommands()
 				.build((event, msg, args) -> {
 					msg.appendContent("Aliases:\r\n\r\n", Styles.BOLD);
 
-					p.getOptions()
-							.getSubCommands()
+					p.getCommands()
 							.forEach(sub -> {
 								StringBuilder content = new StringBuilder();
-								CommandOptions opt = sub.getOptions();
 								String list = String.join(", ",
-										opt.getAliases());
+										sub.getAliases());
 
 								content.append("• ");
-								content.append(opt.getName());
+								content.append(sub.getName());
 								content.append("\t");
 								content.append(list);
 

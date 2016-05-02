@@ -1,19 +1,30 @@
 package instructabilty.command;
 
+import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
+import sx.blah.discord.util.MessageBuilder;
+
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
-import sx.blah.discord.util.MessageBuilder;
-
-public class CommandRegistry extends Command {
+public class CommandRegistry implements Command {
 
 	private String commandPrefix = ".";
 
-	public CommandRegistry() {
-		super(new CommandBuilder(".").buildOptions());
+	@Override
+	public String getName() {
+		return "registry";
+	}
+
+	@Override
+	public String getDesc() {
+		return "The root command registry";
+	}
+
+	@Override
+	public CommandExecutable getExecutable() {
+		return ((event, msg, args) -> {});
 	}
 
 	public void execute(
@@ -22,8 +33,7 @@ public class CommandRegistry extends Command {
 			String input)
 			throws Exception {
 		final LinkedList<String> args = new LinkedList<>();
-		final Pattern p = Pattern
-				.compile("([\"'])(?:(?=(\\\\?))\\2.)*?\\1|([^\\s]+)");
+		final Pattern p = Pattern.compile("([\"'])(?:(?=(\\\\?))\\2.)*?\\1|([^\\s]+)");
 		final Matcher m = p.matcher(input);
 
 		while (m.find()) {
@@ -47,7 +57,7 @@ public class CommandRegistry extends Command {
 		Optional<Command> cmd = getCommand(args.getFirst());
 
 		if (cmd.isPresent())
-			super.execute(event, msg, args);
+			execute(event, msg, args);
 	}
 
 	public String getCommandPrefix() {
