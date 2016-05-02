@@ -12,6 +12,10 @@ public class CommandRegistry implements Command {
 
 	private String commandPrefix = ".";
 
+	public CommandRegistry() {
+		addHelperCommands();
+	}
+
 	@Override
 	public String getName() {
 		return "registry";
