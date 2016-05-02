@@ -3,9 +3,14 @@ Instructability is a Discord4J Command API Module written in Java 8.
 Enables a simple yet complex way of adding Commands into your Discord4J Bot.
 
 ## Usage
+### Users
+To add this Module to your bot, simply head to the [Releases](https://github.com/Kaioru/Instructabilty/releases) page and download the latest, or required, release of Instructability. Once downloaded, head to your Bot's Module directory and place the .jar file there.
+
+Aaaaaaand you're done! Happy botting!
+### Developers
 First, add Instructability as a dependency to your project.
-### Maven
-#### Step 1: Add the JitPack repository to your build file
+#### Maven
+##### Step 1: Add the JitPack repository to your build file
 ``` xml
 <repositories>
 	<repository>
@@ -14,7 +19,7 @@ First, add Instructability as a dependency to your project.
 	</repository>
 </repositories>
 ```
-#### Step 2: Add the dependency
+##### Step 2: Add the dependency
 Change the version according to your desired version of Instructability. (Commit works as well)
 ``` xml
 <dependency>
@@ -25,7 +30,7 @@ Change the version according to your desired version of Instructability. (Commit
 ```
 More details on [JitPack](https://jitpack.io/#Kaioru/Instructabilty) for Gradle, sbt and leiningen.
 
-### Adding Commands
+#### Adding Commands
 ``` java
 Instructables.getRegistry()
 		.registerCommand(new CommandBuilder("ping") // Registers the Command
@@ -40,7 +45,7 @@ Instructables.getRegistry()
 					msg.build();
 				}));
 ```
-### Cool stuff
+#### Cool stuff
 ```
 .testcommand "super long argument here" secondargument 'another long argument'
 ```
@@ -54,4 +59,5 @@ To remove these Helper Commands, simply add a ```.skipHookingDefaults()``` metho
 
 ## Contributing
 I'm not the best programmer out there, there will be imperfections and stuff.
+
 So feel free to contribute and help the project out!
