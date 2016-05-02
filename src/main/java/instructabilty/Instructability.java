@@ -33,7 +33,7 @@ public class Instructability implements IModule {
 
 	@Override
 	public String getName() {
-		return "Instructability";
+		return getClass().getPackage().getImplementationTitle();
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class Instructability implements IModule {
 
 	@Override
 	public String getVersion() {
-		return "0.0.1";
+		return getClass().getPackage().getImplementationVersion();
 	}
 
 	@Override

@@ -1,18 +1,27 @@
 package instructabilty.permission;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Permissions {
 
-	private final List<String> permissions;
+	private final Set<String> permissions;
 
 	public Permissions() {
-		this.permissions = new ArrayList<>();
+		this.permissions = new HashSet<>();
 	}
 
-	public List<String> getPermissions() {
-		return permissions;
+	public Set<String> get() {
+		return Collections.unmodifiableSet(permissions);
+	}
+
+	public void add(String permission) {
+		permissions.add(permission);
+	}
+
+	public void remove(String permission) {
+		permissions.remove(permission);
 	}
 
 }
