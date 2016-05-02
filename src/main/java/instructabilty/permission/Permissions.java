@@ -14,4 +14,5 @@ public class Permissions {
 	public List<String> getPermissions() {
 		return permissions;
 	}
+
 }
