@@ -95,7 +95,7 @@ Commands are able to have spacings in arguments and executed as shown above.
 .testcommand alias
 ```
 All Commands have the help and alias Sub-commands to provide information on the Command.
-To remove these Helper Commands, simply add a ```.skipHookingDefaults()``` method in the CommandBuilder when building the Command.
+To remove these Helper Commands, simply add a ```.noHelperCommands()``` method in the CommandBuilder when building the Command.
 
 ## Contributing
 I'm not the best programmer out there, there will be imperfections and stuff.
