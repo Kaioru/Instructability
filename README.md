@@ -25,12 +25,13 @@ Change the version according to your desired version of Instructability. (Commit
 <dependency>
     <groupId>com.github.Kaioru</groupId>
     <artifactId>Instructabilty</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 More details on [JitPack](https://jitpack.io/#Kaioru/Instructabilty) for Gradle, sbt and leiningen.
 
 #### Adding Commands
+##### Using the Builder
 ``` java
 Instructables.getRegistry()
 		.registerCommand(new CommandBuilder("ping") // Registers the Command
@@ -40,11 +41,46 @@ Instructables.getRegistry()
 							msg.appendContent("Hello from the inside!");
 							msg.build(); // Sends and Build the message
 						}))
+				.command(new CommandBuilder("perms")
+				                        .permission("you.need.this.permission") // Adds a permission to the Command
+                						.build((event, msg, args) -> {
+                							msg.appendContent("Permission found!");
+                							msg.build(); // Sends and Build the message
+                						}))
 				.build((event, msg, args) -> {
 					msg.appendContent("Hello from the outside!");
 					msg.build();
 				}));
 ```
+##### Using classes
+```java
+public class DemoCommand implements Command {
+
+	public DemoCommand() {
+		addHelperCommands(); // Adds the 'help' and 'alias' sub-commands to your command
+	}
+
+	@Override
+	public String getName() {
+		return "demo"; // Name of your command
+	}
+
+	@Override
+	public String getDesc() {
+		return "This is a demo!"; // Description of your command
+	}
+
+	@Override
+	public CommandExecutable getExecutable() {
+		return ((event, msg, args) -> { // The command's executable
+			msg.appendContent("Hello world!");
+			msg.build();
+		});
+	}
+
+}
+```
+Adding of permissions and further sub-commands is also possible with this method. However, it is not shown in the example above.
 #### Cool stuff
 ```
 .testcommand "super long argument here" secondargument 'another long argument'
