@@ -11,6 +11,7 @@ public class BuiltCommand extends CommandImpl {
 	private final List<Command> commands;
 	private final CommandPermission permission;
 	private final CommandExecutable executable;
+	private final boolean removeTriggerMessage;
 
 	public BuiltCommand(String name,
 	                    String desc,
@@ -18,7 +19,8 @@ public class BuiltCommand extends CommandImpl {
 	                    List<Command> commands,
 	                    CommandPermission permission,
 	                    CommandExecutable executable,
-	                    boolean addHelperCommands) {
+	                    boolean addHelperCommands,
+	                    boolean removeTriggerMessage) {
 		this.name = name;
 		this.desc = desc;
 		this.aliases = aliases;
@@ -28,6 +30,8 @@ public class BuiltCommand extends CommandImpl {
 
 		if (addHelperCommands)
 			addHelperCommands();
+
+		this.removeTriggerMessage = removeTriggerMessage;
 	}
 
 	@Override
@@ -58,6 +62,11 @@ public class BuiltCommand extends CommandImpl {
 	@Override
 	public CommandExecutable getExecutable() {
 		return executable;
+	}
+
+	@Override
+	public boolean removeTriggerMessage() {
+		return removeTriggerMessage;
 	}
 
 }

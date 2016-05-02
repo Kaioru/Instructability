@@ -13,6 +13,7 @@ public class CommandBuilder implements Builder<BuiltCommand> {
 	private List<Command> commands;
 	private CommandPermission permission;
 	private boolean addHelperCommands;
+	private boolean removeTriggerMessage;
 
 	public CommandBuilder(String name) {
 		this.name = name;
@@ -50,6 +51,11 @@ public class CommandBuilder implements Builder<BuiltCommand> {
 		return this;
 	}
 
+	public CommandBuilder noRemoveTrigger() {
+		this.removeTriggerMessage = false;
+		return this;
+	}
+
 	@Override
 	public BuiltCommand build() {
 		return build((event, msg, args) -> {});
@@ -62,7 +68,8 @@ public class CommandBuilder implements Builder<BuiltCommand> {
 				commands,
 				permission,
 				executable,
-				addHelperCommands);
+				addHelperCommands,
+				removeTriggerMessage);
 	}
 
 }
