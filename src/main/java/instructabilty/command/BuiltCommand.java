@@ -3,7 +3,7 @@ package instructabilty.command;
 import java.util.List;
 import java.util.Optional;
 
-public class SimpleCommand implements Command {
+public class BuiltCommand implements Command {
 
 	private final String name;
 	private final String desc;
@@ -12,13 +12,13 @@ public class SimpleCommand implements Command {
 	private final CommandPermission permission;
 	private final CommandExecutable executable;
 
-	public SimpleCommand(String name,
-	                     String desc,
-	                     List<String> aliases,
-	                     List<Command> commands,
-	                     CommandPermission permission,
-	                     CommandExecutable executable,
-	                     boolean addHelperCommands) {
+	public BuiltCommand(String name,
+	                    String desc,
+	                    List<String> aliases,
+	                    List<Command> commands,
+	                    CommandPermission permission,
+	                    CommandExecutable executable,
+	                    boolean addHelperCommands) {
 		this.name = name;
 		this.desc = desc;
 		this.aliases = aliases;

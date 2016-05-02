@@ -5,7 +5,7 @@ import instructabilty.util.Builder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandBuilder implements Builder<SimpleCommand> {
+public class CommandBuilder implements Builder<BuiltCommand> {
 
 	private final String name;
 	private String desc;
@@ -51,12 +51,12 @@ public class CommandBuilder implements Builder<SimpleCommand> {
 	}
 
 	@Override
-	public SimpleCommand build() {
+	public BuiltCommand build() {
 		return build((event, msg, args) -> {});
 	}
 
-	public SimpleCommand build(CommandExecutable executable) {
-		return new SimpleCommand(name,
+	public BuiltCommand build(CommandExecutable executable) {
+		return new BuiltCommand(name,
 				desc,
 				aliases,
 				commands,
