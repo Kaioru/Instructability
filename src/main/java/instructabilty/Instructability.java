@@ -21,7 +21,7 @@ public class Instructability implements IModule {
 		this.client = client;
 
 		client.getDispatcher().registerListener(listener);
-		Discord4J.LOGGER.info(getName() + " BuiltCommand Listener registered");
+		Discord4J.LOGGER.info(getName() + " Command Listener registered");
 		return true;
 	}
 
