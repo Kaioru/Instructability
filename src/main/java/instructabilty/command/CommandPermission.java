@@ -38,7 +38,7 @@ public class CommandPermission {
 	public boolean checkPermission(LinkedList<String> permissions) {
 		String first = permissions.removeFirst();
 
-		if (first == name || first == "*") {
+		if (first.equals(name) || first.equals("*")) {
 			if (permissions.size() == 0)
 				return true;
 			else
