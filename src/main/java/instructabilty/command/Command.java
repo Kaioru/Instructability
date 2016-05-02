@@ -37,6 +37,10 @@ public interface Command extends CommandExecutable {
 
 	CommandExecutable getExecutable();
 
+	default boolean removeTriggerMessage() {
+		return true;
+	}
+
 	default void addHelperCommands() {
 		getCommands().add(Commands.getHelpCommand(this));
 		getCommands().add(Commands.getAliasCommand(this));
@@ -67,6 +71,9 @@ public interface Command extends CommandExecutable {
 					return;
 				}
 			}
+
+			if (removeTriggerMessage())
+				event.getMessage().delete();
 
 			getExecutable().execute(event, msg, args);
 		}
