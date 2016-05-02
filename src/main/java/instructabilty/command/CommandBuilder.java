@@ -1,14 +1,11 @@
-package instructabilty.command.builder;
+package instructabilty.command;
 
-import instructabilty.command.Command;
-import instructabilty.command.CommandExecutable;
-import instructabilty.command.CommandPermission;
 import instructabilty.util.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandBuilder implements Builder<BuiltCommand> {
+public class CommandBuilder implements Builder<SimpleCommand> {
 
 	private final String name;
 	private String desc;
@@ -54,12 +51,12 @@ public class CommandBuilder implements Builder<BuiltCommand> {
 	}
 
 	@Override
-	public BuiltCommand build() {
+	public SimpleCommand build() {
 		return build((event, msg, args) -> {});
 	}
 
-	public BuiltCommand build(CommandExecutable executable) {
-		return new BuiltCommand(name,
+	public SimpleCommand build(CommandExecutable executable) {
+		return new SimpleCommand(name,
 				desc,
 				aliases,
 				commands,
