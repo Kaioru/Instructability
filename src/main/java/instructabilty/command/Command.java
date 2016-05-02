@@ -49,7 +49,7 @@ public class Command implements CommandExecutable {
 				if (!Instructables.getPermissionRegistry()
 						.getForGuild(event.getMessage().getGuild().getID())
 						.checkPermissions(event.getMessage().getAuthor(), event.getMessage().getGuild(), reqPermission)) {
-					msg.appendContent("You do not have enough permissions to use the command.");
+					msg.appendContent(String.format("You do not have the permission '%s' to use the command.", reqPermission.getName()));
 					msg.build();
 					return;
 				}
