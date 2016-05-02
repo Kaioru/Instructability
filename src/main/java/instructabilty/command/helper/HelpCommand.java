@@ -27,7 +27,7 @@ public class HelpCommand extends HelperCommand {
 
 			getParent().getCommands()
 					.stream()
-					.filter(c -> !(c instanceof HelpCommand))
+					.filter(c -> !(c instanceof HelperCommand))
 					.forEach(sub -> {
 						StringBuilder content = new StringBuilder();
 
