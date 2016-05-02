@@ -28,7 +28,7 @@ public class Instructability implements IModule {
 	@Override
 	public void disable() {
 		client.getDispatcher().unregisterListener(listener);
-		Discord4J.LOGGER.info(getName() + " BuiltCommand Listener unregistered");
+		Discord4J.LOGGER.info(getName() + " Command Listener unregistered");
 	}
 
 	@Override
