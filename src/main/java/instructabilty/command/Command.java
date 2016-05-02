@@ -5,7 +5,10 @@ import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.modules.IModule;
 import sx.blah.discord.util.MessageBuilder;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public interface Command extends CommandExecutable {
 
@@ -13,19 +16,15 @@ public interface Command extends CommandExecutable {
 
 	String getDesc();
 
-	default List<String> getAliases() {
-		return new ArrayList<>();
-	}
+	List<String> getAliases();
 
-	default List<Command> getCommands() {
-		return new ArrayList<>();
-	}
+	List<Command> getCommands();
 
 	default Optional<Command> getCommand(String name) {
-		return getCommands().stream().filter(cmd -> getName()
-				.startsWith(name)
-				|| getAliases().stream()
-				.anyMatch(s -> s.startsWith(name))).findFirst();
+		return getCommands().stream()
+				.filter(cmd -> cmd.getName().startsWith(name)
+						|| cmd.getAliases().stream().anyMatch(s -> s.startsWith(name)))
+				.findFirst();
 	}
 
 	default Optional<IModule> getModule() {

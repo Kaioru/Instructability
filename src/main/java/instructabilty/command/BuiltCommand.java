@@ -3,7 +3,7 @@ package instructabilty.command;
 import java.util.List;
 import java.util.Optional;
 
-public class BuiltCommand implements Command {
+public class BuiltCommand extends CommandImpl {
 
 	private final String name;
 	private final String desc;
