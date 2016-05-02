@@ -12,6 +12,7 @@ public class BuiltCommand extends CommandImpl {
 	private final CommandPermission permission;
 	private final CommandExecutable executable;
 	private final boolean removeTriggerMessage;
+	private final boolean allowPrivateMessage;
 
 	public BuiltCommand(String name,
 	                    String desc,
@@ -20,7 +21,8 @@ public class BuiltCommand extends CommandImpl {
 	                    CommandPermission permission,
 	                    CommandExecutable executable,
 	                    boolean addHelperCommands,
-	                    boolean removeTriggerMessage) {
+	                    boolean removeTriggerMessage,
+	                    boolean allowPrivateMessage) {
 		this.name = name;
 		this.desc = desc;
 		this.aliases = aliases;
@@ -32,6 +34,7 @@ public class BuiltCommand extends CommandImpl {
 			addHelperCommands();
 
 		this.removeTriggerMessage = removeTriggerMessage;
+		this.allowPrivateMessage = allowPrivateMessage;
 	}
 
 	@Override
@@ -67,6 +70,11 @@ public class BuiltCommand extends CommandImpl {
 	@Override
 	public boolean removeTriggerMessage() {
 		return removeTriggerMessage;
+	}
+
+	@Override
+	public boolean allowPrivateMessage() {
+		return allowPrivateMessage;
 	}
 
 }

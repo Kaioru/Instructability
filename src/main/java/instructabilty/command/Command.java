@@ -41,6 +41,8 @@ public interface Command extends CommandExecutable {
 		return true;
 	}
 
+	default boolean allowPrivateMessage() { return false; }
+
 	default void addHelperCommands() {
 		getCommands().add(Commands.getHelpCommand(this));
 		getCommands().add(Commands.getAliasCommand(this));
@@ -60,6 +62,14 @@ public interface Command extends CommandExecutable {
 			} else
 				throw new NoSuchElementException();
 		} catch (NoSuchElementException e) {
+			if (event.getMessage().getChannel().isPrivate()) {
+				if (!allowPrivateMessage())
+					return;
+			}
+
+			if (removeTriggerMessage())
+				event.getMessage().delete();
+
 			if (getPermission().isPresent()) {
 				CommandPermission reqPermission = getPermission().get();
 
@@ -71,9 +81,6 @@ public interface Command extends CommandExecutable {
 					return;
 				}
 			}
-
-			if (removeTriggerMessage())
-				event.getMessage().delete();
 
 			getExecutable().execute(event, msg, args);
 		}

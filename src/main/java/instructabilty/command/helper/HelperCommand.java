@@ -15,4 +15,9 @@ public abstract class HelperCommand extends CommandImpl {
 		return parent;
 	}
 
+	@Override
+	public boolean allowPrivateMessage() {
+		return true;
+	}
+
 }

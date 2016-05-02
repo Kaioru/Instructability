@@ -14,6 +14,7 @@ public class CommandBuilder implements Builder<BuiltCommand> {
 	private CommandPermission permission;
 	private boolean addHelperCommands;
 	private boolean removeTriggerMessage;
+	private boolean allowPrivateMessage;
 
 	public CommandBuilder(String name) {
 		this.name = name;
@@ -21,6 +22,8 @@ public class CommandBuilder implements Builder<BuiltCommand> {
 		this.aliases = new ArrayList<>();
 		this.commands = new ArrayList<>();
 		this.addHelperCommands = true;
+		this.removeTriggerMessage = true;
+		this.allowPrivateMessage = false;
 	}
 
 	public CommandBuilder desc(String desc) {
@@ -56,6 +59,11 @@ public class CommandBuilder implements Builder<BuiltCommand> {
 		return this;
 	}
 
+	public CommandBuilder noPrivateMessage() {
+		this.allowPrivateMessage = false;
+		return this;
+	}
+
 	@Override
 	public BuiltCommand build() {
 		return build((event, msg, args) -> {});
@@ -69,7 +77,8 @@ public class CommandBuilder implements Builder<BuiltCommand> {
 				permission,
 				executable,
 				addHelperCommands,
-				removeTriggerMessage);
+				removeTriggerMessage,
+				allowPrivateMessage);
 	}
 
 }
