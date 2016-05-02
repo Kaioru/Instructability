@@ -31,6 +31,22 @@ Change the version according to your desired version of Instructability. (Commit
 More details on [JitPack](https://jitpack.io/#Kaioru/Instructabilty) for Gradle, sbt and leiningen.
 
 #### Adding Commands
+##### Using annotations
+``` java
+public class AnnotationExample {
+
+	@AnnotatedCommand(name = "demo")
+	public void onDemoCommand(MessageReceivedEvent event, MessageBuilder msg, LinkedList<String> args) throws Exception {
+		msg.appendContent("Hello world!");
+		msg.build();
+	}
+
+}
+```
+``` java
+Instructables.getRegistry().registerCommands(new AnnotationExample());
+```
+Due to the nature of Annotations in Java, most sub-command features will not be supported in this method. It is only recommended to use this method for basic commands.
 ##### Using the Builder
 ``` java
 Instructables.getRegistry()
@@ -53,7 +69,7 @@ Instructables.getRegistry()
 				}));
 ```
 ##### Using classes
-```java
+``` java
 public class DemoCommand implements Command {
 
 	public DemoCommand() {
@@ -80,8 +96,7 @@ public class DemoCommand implements Command {
 
 }
 ```
-And of course registering the command itself.
-```java
+``` java
 Instructables.getRegistry().registerCommand(new DemoCommand());
 ```
 Adding of permissions and further sub-commands is also possible with this method. However, it is not shown in the example above.
@@ -94,7 +109,7 @@ Commands are able to have spacings in arguments and executed as shown above.
 .testcommand help
 .testcommand alias
 ```
-All Commands have the help and alias Sub-commands to provide information on the Command.
+All Commands have the help and alias sub-commands to provide information on the Command.
 To remove these Helper Commands, simply add a ```.noHelperCommands()``` method in the CommandBuilder when building the Command.
 
 ## Contributing
