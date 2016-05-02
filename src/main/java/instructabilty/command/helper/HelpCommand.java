@@ -26,14 +26,13 @@ public class HelpCommand extends HelperCommand {
 	@Override
 	public CommandExecutable getExecutable() {
 		return ((event, msg, args) -> {
-			msg.appendContent("Commands:\r\n\r\n", MessageBuilder.Styles.BOLD);
-
 			List<Command> list = getParent().getCommands()
 					.stream()
 					.filter(c -> !(c instanceof HelperCommand))
 					.collect(Collectors.toList());
 
-			if (list.size() > 0)
+			if (list.size() > 0) {
+				msg.appendContent("Commands:\r\n\r\n", MessageBuilder.Styles.BOLD);
 				list.forEach(sub -> {
 					StringBuilder content = new StringBuilder();
 
@@ -46,7 +45,7 @@ public class HelpCommand extends HelperCommand {
 							MessageBuilder.Styles.INLINE_CODE)
 							.appendContent("\r\n");
 				});
-			else msg.appendContent("No commands found!");
+			} else msg.appendContent("No commands found!");
 
 			msg.appendContent("\r\n");
 			msg.appendContent("For more detailed information use ")
