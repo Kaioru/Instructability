@@ -80,6 +80,10 @@ public class DemoCommand implements Command {
 
 }
 ```
+And of course registering the command itself.
+```java
+Instructables.getRegistry().registerCommand(new DemoCommand());
+```
 Adding of permissions and further sub-commands is also possible with this method. However, it is not shown in the example above.
 #### Cool stuff
 ```
