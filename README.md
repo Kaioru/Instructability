@@ -42,11 +42,11 @@ Instructables.getRegistry()
 							msg.build(); // Sends and Build the message
 						}))
 				.command(new CommandBuilder("perms")
-			                        .permission("you.need.this.permission") // Adds a permission to the Command
-        						.build((event, msg, args) -> {
-        							msg.appendContent("Permission found!");
-        							msg.build(); // Sends and Build the message
-        						}))
+						.permission("you.need.this.permission") // Adds a permission to the Command
+						.build((event, msg, args) -> {
+							msg.appendContent("Permission found!");
+							msg.build(); // Sends and Build the message
+						}))
 				.build((event, msg, args) -> {
 					msg.appendContent("Hello from the outside!");
 					msg.build();
