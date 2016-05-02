@@ -61,7 +61,7 @@ public class CommandRegistry extends CommandImpl {
 		Optional<Command> cmd = getCommand(args.getFirst());
 
 		if (cmd.isPresent())
-			execute(event, msg, args);
+			cmd.get().execute(event, msg, args);
 	}
 
 	public String getCommandPrefix() {
