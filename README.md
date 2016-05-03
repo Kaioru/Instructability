@@ -71,7 +71,7 @@ Instructables.getRegistry()
 ```
 ##### Using classes
 ``` java
-public class DemoCommand implements Command {
+public class DemoCommand extends CommandImpl {
 
 	public DemoCommand() {
 		addHelperCommands(); // Adds the 'help' and 'alias' sub-commands to your command
