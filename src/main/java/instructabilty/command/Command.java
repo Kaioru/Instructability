@@ -54,17 +54,14 @@ public interface Command extends CommandExecutable {
 			MessageBuilder msg,
 			LinkedList<String> args) throws Exception {
 		try {
-			if (args.size() > 1) {
-				String first = args.removeFirst();
-				Optional<Command> opt = getCommand(args.getFirst());
+			String first = args.removeFirst();
+			Optional<Command> opt = getCommand(args.getFirst());
 
-				if (opt.isPresent()) {
-					opt.get().execute(event, msg, args);
-					return;
-				}
-			}
-
-			throw new NoSuchElementException();
+			if (opt.isPresent()) {
+				args.add(1, first);
+				opt.get().execute(event, msg, args);
+			} else
+				throw new NoSuchElementException();
 		} catch (NoSuchElementException e) {
 			if (event.getMessage().getChannel().isPrivate()) {
 				if (!allowPrivateMessage())
