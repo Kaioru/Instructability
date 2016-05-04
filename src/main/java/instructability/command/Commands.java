@@ -1,8 +1,8 @@
-package instructabilty.command;
+package instructability.command;
 
-import instructabilty.command.helper.AliasCommand;
-import instructabilty.command.helper.HelpCommand;
-import instructabilty.command.helper.HelperCommand;
+import instructability.command.helper.AliasCommand;
+import instructability.command.helper.HelpCommand;
+import instructability.command.helper.HelperCommand;
 
 public class Commands {
 

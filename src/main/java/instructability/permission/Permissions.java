@@ -1,4 +1,4 @@
-package instructabilty.permission;
+package instructability.permission;
 
 import java.util.Collections;
 import java.util.HashSet;

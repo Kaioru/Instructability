@@ -1,4 +1,4 @@
-package instructabilty.command;
+package instructability.command;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

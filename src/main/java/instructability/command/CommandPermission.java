@@ -1,4 +1,4 @@
-package instructabilty.command;
+package instructability.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;

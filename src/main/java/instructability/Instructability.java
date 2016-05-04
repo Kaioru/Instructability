@@ -1,6 +1,6 @@
-package instructabilty;
+package instructability;
 
-import instructabilty.command.CommandListener;
+import instructability.command.CommandListener;
 import sx.blah.discord.Discord4J;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.modules.IModule;
