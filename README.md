@@ -1,7 +1,9 @@
-# Instructabilty [![](https://jitpack.io/v/Kaioru/Instructability.svg)](https://jitpack.io/#Kaioru/Instructability)
+# Instructability [![](https://jitpack.io/v/Kaioru/Instructabilty.svg)](https://jitpack.io/#Kaioru/Instructabilty)
 Instructability is a Discord4J Commands API Module written in Java 8.
 
 This Module adds a variety of ways to add Commands to your Discord4J Bot.
+
+**The project is actually called Instructability. The current Github repo has a typo (missing an 'i').. Ugh.**
 
 ## Usage
 ### Users
