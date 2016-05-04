@@ -1,7 +1,7 @@
-package instructabilty;
+package instructability;
 
-import instructabilty.command.CommandRegistry;
-import instructabilty.permission.PermissionRegistry;
+import instructability.command.CommandRegistry;
+import instructability.permission.PermissionRegistry;
 
 public class Instructables {
 

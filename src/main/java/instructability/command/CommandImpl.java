@@ -1,4 +1,4 @@
-package instructabilty.command;
+package instructability.command;
 
 import sx.blah.discord.Discord4J;
 

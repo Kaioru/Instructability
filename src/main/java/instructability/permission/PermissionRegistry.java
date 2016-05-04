@@ -1,4 +1,4 @@
-package instructabilty.permission;
+package instructability.permission;
 
 import java.util.HashMap;
 import java.util.Map;

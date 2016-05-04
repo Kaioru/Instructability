@@ -1,6 +1,6 @@
-package instructabilty.command.helper;
+package instructability.command.helper;
 
-import instructabilty.command.Command;
+import instructability.command.Command;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.util.MessageBuilder;
 

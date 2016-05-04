@@ -1,6 +1,6 @@
-package instructabilty.command;
+package instructability.command;
 
-import instructabilty.util.Builder;
+import instructability.util.Builder;
 
 import java.util.ArrayList;
 import java.util.List;

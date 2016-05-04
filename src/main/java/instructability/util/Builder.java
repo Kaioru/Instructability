@@ -1,4 +1,4 @@
-package instructabilty.util;
+package instructability.util;
 
 public interface Builder<T> {
 

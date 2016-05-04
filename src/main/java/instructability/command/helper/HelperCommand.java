@@ -1,7 +1,7 @@
-package instructabilty.command.helper;
+package instructability.command.helper;
 
-import instructabilty.command.Command;
-import instructabilty.command.SimpleCommand;
+import instructability.command.Command;
+import instructability.command.SimpleCommand;
 
 public abstract class HelperCommand extends SimpleCommand {
 

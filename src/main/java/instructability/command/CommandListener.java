@@ -1,6 +1,6 @@
-package instructabilty.command;
+package instructability.command;
 
-import instructabilty.Instructables;
+import instructability.Instructables;
 import sx.blah.discord.Discord4J;
 import sx.blah.discord.api.IListener;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;

@@ -1,4 +1,4 @@
-package instructabilty.command;
+package instructability.command;
 
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.util.MessageBuilder;

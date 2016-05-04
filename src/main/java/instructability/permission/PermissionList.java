@@ -1,6 +1,6 @@
-package instructabilty.permission;
+package instructability.permission;
 
-import instructabilty.command.CommandPermission;
+import instructability.command.CommandPermission;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
 
