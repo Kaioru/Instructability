@@ -28,7 +28,7 @@ Change the version according to your desired version of Instructability. (Commit
 <dependency>
     <groupId>com.github.Kaioru</groupId>
     <artifactId>Instructabilty</artifactId>
-    <version>0.1.1</version>
+    <version>@VERSION@</version>
 </dependency>
 ```
 More details on [JitPack](https://jitpack.io/#Kaioru/Instructabilty) for Gradle, sbt and leiningen.
