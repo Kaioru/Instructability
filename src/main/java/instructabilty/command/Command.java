@@ -54,10 +54,11 @@ public interface Command extends CommandExecutable {
 			MessageBuilder msg,
 			LinkedList<String> args) throws Exception {
 		try {
+			String first = args.removeFirst();
 			Optional<Command> opt = getCommand(args.getFirst());
 
 			if (opt.isPresent()) {
-				args.removeFirst();
+				args.add(1, first);
 				opt.get().execute(event, msg, args);
 			} else
 				throw new NoSuchElementException();
