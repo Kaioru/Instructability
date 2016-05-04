@@ -1,5 +1,7 @@
 package instructabilty.command;
 
+import sx.blah.discord.Discord4J;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,11 @@ public abstract class CommandImpl implements Command {
 
 	public void registerCommand(Command cmd) {
 		this.commands.add(cmd);
+		Discord4J.LOGGER.debug(String.format(
+				"Registered command '%s' to '%s'",
+				cmd.getName(),
+				this.getName()
+		));
 	}
 
 	public void registerCommands(Object object) {
@@ -42,7 +49,6 @@ public abstract class CommandImpl implements Command {
 				if (!a.addHelperCommands()) builder.noHelperCommands();
 
 				registerCommand(builder.build((event, msg, args) -> method.invoke(object, event, msg, args)));
-				System.out.println("Registered annotated command: " + a.name());
 			}
 	}
 
