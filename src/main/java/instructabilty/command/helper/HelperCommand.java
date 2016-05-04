@@ -1,9 +1,9 @@
 package instructabilty.command.helper;
 
 import instructabilty.command.Command;
-import instructabilty.command.CommandImpl;
+import instructabilty.command.SimpleCommand;
 
-public abstract class HelperCommand extends CommandImpl {
+public abstract class HelperCommand extends SimpleCommand {
 
 	private final Command parent;
 

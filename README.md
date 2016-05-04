@@ -71,7 +71,7 @@ Instructables.getRegistry()
 ```
 ##### Using classes
 ``` java
-public class DemoCommand extends CommandImpl {
+public class DemoCommand extends SimpleCommand {
 
 	public DemoCommand() {
 		addHelperCommands(); // Adds the 'help' and 'alias' sub-commands to your command
@@ -88,11 +88,9 @@ public class DemoCommand extends CommandImpl {
 	}
 
 	@Override
-	public CommandExecutable getExecutable() {
-		return ((event, msg, args) -> { // The command's executable
-			msg.appendContent("Hello world!");
-			msg.build();
-		});
+	public void onExecute(MessageReceivedEvent event, MessageBuilder msg, LinkedList<String> args) throws Exception {
+        msg.appendContent("Hello world!");
+        msg.build();
 	}
 
 }
