@@ -3,8 +3,6 @@ Instructability is a Discord4J Commands API Module written in Java 8.
 
 This Module adds a variety of ways to add Commands to your Discord4J Bot.
 
-**The project is actually called Instructability. The current Github repo has a typo (missing an 'i').. Ugh.**
-
 ## Usage
 ### Users
 To add this Module to your bot, simply head to the [Releases](https://github.com/Kaioru/Instructabilty/releases) page and download the latest, or required, release of Instructability. Once downloaded, head to your Bot's Module directory and place the .jar file there.
