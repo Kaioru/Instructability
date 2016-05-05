@@ -58,10 +58,12 @@ public class CommandRegistry extends CommandImpl {
 			MessageBuilder msg,
 			LinkedList<String> args)
 			throws Exception {
-		Optional<Command> cmd = getCommand(args.getFirst());
+		if (args.size() > 0) {
+			Optional<Command> cmd = getCommand(args.getFirst());
 
-		if (cmd.isPresent())
-			cmd.get().execute(event, msg, args);
+			if (cmd.isPresent())
+				cmd.get().execute(event, msg, args);
+		}
 	}
 
 	public String getCommandPrefix() {
