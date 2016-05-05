@@ -44,6 +44,7 @@ public interface Command extends CommandExecutable {
 	default boolean allowPrivateMessage() { return false; }
 
 	default void addHelperCommands() {
+		getCommands().add(Commands.getInfoCommand(this));
 		getCommands().add(Commands.getHelpCommand(this));
 		getCommands().add(Commands.getAliasCommand(this));
 	}
