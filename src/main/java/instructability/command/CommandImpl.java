@@ -27,6 +27,14 @@ public abstract class CommandImpl implements Command {
 		return commands;
 	}
 
+	public void addAlias(String alias) {
+		this.aliases.add(alias);
+	}
+
+	public void removeAlias(String alias) {
+		this.aliases.remove(alias);
+	}
+
 	public void registerCommand(Command cmd) {
 		this.commands.add(cmd);
 		Discord4J.LOGGER.info(String.format(
