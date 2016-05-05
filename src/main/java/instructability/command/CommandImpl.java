@@ -29,7 +29,7 @@ public abstract class CommandImpl implements Command {
 
 	public void registerCommand(Command cmd) {
 		this.commands.add(cmd);
-		Discord4J.LOGGER.debug(String.format(
+		Discord4J.LOGGER.info(String.format(
 				"Registered command '%s' to '%s'",
 				cmd.getName(),
 				this.getName()
