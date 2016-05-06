@@ -8,8 +8,7 @@ import sx.blah.discord.util.MessageBuilder;
 import java.util.LinkedList;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CommandTest {
 
@@ -53,6 +52,7 @@ public class CommandTest {
 		classCommand.ifPresent(cmd -> {
 			assertEquals(cmd.getName(), "class");
 			assertEquals(cmd.getDesc(), "class command");
+			assertFalse(cmd.getCommand("help").isPresent());
 		});
 	}
 
