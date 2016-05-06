@@ -38,7 +38,7 @@ public class Instructability implements IModule {
 
 	@Override
 	public String getAuthor() {
-		return "Kaioru";
+		return getClass().getPackage().getImplementationVendor();
 	}
 
 	@Override
