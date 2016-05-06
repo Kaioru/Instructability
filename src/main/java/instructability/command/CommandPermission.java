@@ -11,7 +11,7 @@ public class CommandPermission {
 	private final List<CommandPermission> subPermissions;
 
 	public CommandPermission(String permission) {
-		this(new LinkedList<>(Arrays.asList(permission.split("."))));
+		this(new LinkedList<>(Arrays.asList(permission.split("\\."))));
 	}
 
 	public CommandPermission(LinkedList<String> permission) {
