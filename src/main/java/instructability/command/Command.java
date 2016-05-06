@@ -1,6 +1,7 @@
 package instructability.command;
 
 import instructability.Instructables;
+import instructability.command.helper.HelperCommandType;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.modules.IModule;
 import sx.blah.discord.util.MessageBuilder;
@@ -44,9 +45,18 @@ public interface Command extends CommandExecutable {
 	default boolean allowPrivateMessage() { return false; }
 
 	default void addHelperCommands() {
-		getCommands().add(Commands.getInfoCommand(this));
-		getCommands().add(Commands.getHelpCommand(this));
-		getCommands().add(Commands.getAliasCommand(this));
+		addHelperCommands(HelperCommandType.ALL);
+	}
+
+	default void addHelperCommands(HelperCommandType... types) {
+		for (HelperCommandType type : types) {
+			if ((type.getValue() & HelperCommandType.INFO.getValue()) > 0)
+				getCommands().add(Commands.getInfoCommand(this));
+			if ((type.getValue() & HelperCommandType.HELP.getValue()) > 0)
+				getCommands().add(Commands.getHelpCommand(this));
+			if ((type.getValue() & HelperCommandType.ALIAS.getValue()) > 0)
+				getCommands().add(Commands.getAliasCommand(this));
+		}
 	}
 
 	@Override
