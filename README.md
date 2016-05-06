@@ -29,8 +29,30 @@ Change the version according to your desired version of Instructability. (Commit
     <version>@VERSION@</version>
 </dependency>
 ```
-More details on [JitPack](https://jitpack.io/#Kaioru/Instructabilty) for Gradle, sbt and leiningen.
+Or simple follow the instructions on [JitPack](https://jitpack.io/#Kaioru/Instructabilty).
+#### Enabling the Module
+##### External
+Simply add the pre-built .jar file of Instructability into your bot's module directory, it's that simple!
+##### Internal
+``` java
+IDiscordClient client = new ClientBuilder()
+				.withToken(token)
+				.login();
 
+client.getModuleLoader().loadModule(new Instructability());
+```
+#### Changing the Command prefix
+##### @mention <command>
+``` java
+client.getDispatcher().registerListener((IListener<ReadyEvent>) event -> // Ensures 'getOurUser()' is not null
+        Instructables.getRegistry().setCommandPrefix(client.getOurUser().mention() + " ")
+);
+```
+##### Everything else
+``` java
+Instructables.getRegistry().setCommandPrefix("!"); // !<command>
+Instructables.getRegistry().setCommandPrefix("bot "); // bot <command>
+```
 #### Adding Commands
 ##### Using annotations
 ``` java
