@@ -16,12 +16,12 @@ public class Instructables {
         Instructables.reg = reg;
     }
 
-    public static PermissionRegistry getPermissionsRegistry() {
-        return preg;
+	public static PermissionRegistry getPermissionRegistry() {
+		return preg;
     }
 
-    public static void setPermissionsRegistry(PermissionRegistry preg) {
-        Instructables.preg = preg;
+	public static void setPermissionRegistry(PermissionRegistry preg) {
+		Instructables.preg = preg;
     }
 
 }
