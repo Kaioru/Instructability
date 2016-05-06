@@ -56,7 +56,6 @@ public abstract class CommandImpl implements Command {
 
 				if (!a.removeTriggerMessage()) builder.noRemoveTrigger();
 				if (!a.allowPrivateMessage()) builder.noPrivateMessage();
-				if (!a.addHelperCommands()) builder.noHelperCommands();
 
 				registerCommand(builder.build((event, msg, args) -> method.invoke(object, event, msg, args)));
 			}
