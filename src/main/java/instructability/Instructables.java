@@ -5,15 +5,22 @@ import instructability.permission.PermissionRegistry;
 
 public class Instructables {
 
-    private final static CommandRegistry reg = new CommandRegistry();
-    private final static PermissionRegistry preg = new PermissionRegistry();
+    private static CommandRegistry reg = new CommandRegistry();
+    private static PermissionRegistry preg = new PermissionRegistry();
 
     public static CommandRegistry getRegistry() {
         return reg;
     }
 
-    public static PermissionRegistry getPermissionRegistry() {
+    public static void setRegistry(CommandRegistry reg) {
+        Instructables.reg = reg;
+    }
+
+    public static PermissionRegistry getPermissionsRegistry() {
         return preg;
     }
 
+    public static void setPermissionsRegistry(PermissionRegistry preg) {
+        Instructables.preg = preg;
+    }
 }
