@@ -36,6 +36,8 @@ public abstract class CommandImpl implements Command {
 	}
 
 	public void registerCommand(Command cmd) {
+		if (getCommand(cmd.getName()).isPresent())
+			Discord4J.LOGGER.warn("Found duplicate command '%s', stuff might not work properly", cmd.getName());
 		this.commands.add(cmd);
 		Discord4J.LOGGER.info(String.format(
 				"Registered command '%s' to '%s'",
