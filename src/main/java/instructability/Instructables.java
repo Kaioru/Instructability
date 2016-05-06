@@ -23,4 +23,5 @@ public class Instructables {
     public static void setPermissionsRegistry(PermissionRegistry preg) {
         Instructables.preg = preg;
     }
+
 }
