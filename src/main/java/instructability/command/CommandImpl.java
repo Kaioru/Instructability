@@ -62,6 +62,11 @@ public abstract class CommandImpl implements Command {
 
 	public void unregisterCommand(Command cmd) {
 		this.commands.remove(cmd);
+		Discord4J.LOGGER.info(String.format(
+				"Unregistered command '%s' from '%s'",
+				cmd.getName(),
+				this.getName()
+		));
 	}
 
 	public void unregisterCommands(Object object) {
