@@ -17,6 +17,4 @@ public @interface AnnotatedCommand {
 
 	boolean allowPrivateMessage() default false;
 
-	boolean addHelperCommands() default true;
-
 }
