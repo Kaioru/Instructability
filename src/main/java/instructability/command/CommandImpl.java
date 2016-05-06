@@ -40,7 +40,7 @@ public abstract class CommandImpl implements Command {
 			Discord4J.LOGGER.warn("Found duplicate command '%s', stuff might not work properly", cmd.getName());
 		this.commands.add(cmd);
 		Discord4J.LOGGER.info(
-				"Registered command '%s' to '%s'",
+				"Registered command '{}' to '{}'",
 				cmd.getName(),
 				this.getName()
 		);
@@ -65,7 +65,7 @@ public abstract class CommandImpl implements Command {
 	public void unregisterCommand(Command cmd) {
 		this.commands.remove(cmd);
 		Discord4J.LOGGER.info(
-				"Unregistered command '%s' from '%s'",
+				"Unregistered command '{}' from '{}'",
 				cmd.getName(),
 				this.getName()
 		);
