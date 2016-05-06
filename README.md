@@ -132,7 +132,9 @@ Commands are able to have spacings in arguments and executed as shown above.
 ```
 All Commands have the help and alias sub-commands to provide information on the Command.
 To remove these Helper Commands, simply add a ```.noHelperCommands()``` method in the CommandBuilder when building the Command.
-
+#### Projects using Instructability
+* [InstructPermissions](https://github.com/Kaioru/InstructPermissions) - Saves all your permissions data to a pretty .json file
+* [ExtendedInstructs](https://github.com/Kaioru/ExtendedInstructs) - Adds general utility commands for Instructability
 ## Need help?
 You can find me on [Discord4J's Discord Channel](https://discord.gg/0SBTUU1wZTX8X8cu) as @Kaioru
 
