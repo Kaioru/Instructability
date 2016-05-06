@@ -39,11 +39,11 @@ public abstract class CommandImpl implements Command {
 		if (getCommand(cmd.getName()).isPresent())
 			Discord4J.LOGGER.warn("Found duplicate command '%s', stuff might not work properly", cmd.getName());
 		this.commands.add(cmd);
-		Discord4J.LOGGER.info(String.format(
+		Discord4J.LOGGER.info(
 				"Registered command '%s' to '%s'",
 				cmd.getName(),
 				this.getName()
-		));
+		);
 	}
 
 	public void registerCommands(Object object) {
@@ -64,11 +64,11 @@ public abstract class CommandImpl implements Command {
 
 	public void unregisterCommand(Command cmd) {
 		this.commands.remove(cmd);
-		Discord4J.LOGGER.info(String.format(
+		Discord4J.LOGGER.info(
 				"Unregistered command '%s' from '%s'",
 				cmd.getName(),
 				this.getName()
-		));
+		);
 	}
 
 	public void unregisterCommands(Object object) {
@@ -80,7 +80,7 @@ public abstract class CommandImpl implements Command {
 								&& c.getDesc().equals(a.desc()))
 						.collect(Collectors.toList());
 
-				cmds.forEach(c -> unregisterCommand(c));
+				cmds.forEach(this::unregisterCommand);
 			}
 		}
 	}
