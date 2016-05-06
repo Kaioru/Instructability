@@ -17,7 +17,12 @@ public class CommandTest {
 	public void commandRegisteringTest() {
 		CommandRegistry reg = Instructables.getRegistry();
 
-		reg.registerCommands(new AnnotatedCommands());
+		assertTrue(reg.getCommand("help").isPresent());
+		assertTrue(reg.getCommand("alias").isPresent());
+
+		AnnotatedCommands aCmds = new AnnotatedCommands();
+
+		reg.registerCommands(aCmds);
 
 		Optional<Command> annotatedCommand = reg.getCommand("annotation");
 		assertTrue(annotatedCommand.isPresent());
@@ -25,6 +30,8 @@ public class CommandTest {
 			assertEquals(cmd.getName(), "annotation");
 			assertEquals(cmd.getDesc(), "annotation command");
 		});
+
+		reg.unregisterCommands(aCmds);
 
 		reg.registerCommand(new CommandBuilder("builder")
 				.command(new CommandBuilder("inside").build())
