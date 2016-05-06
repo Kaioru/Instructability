@@ -1,6 +1,7 @@
 package instructability;
 
 import instructability.command.*;
+import instructability.command.helper.HelperCommandType;
 import org.junit.Test;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.util.MessageBuilder;
@@ -54,6 +55,22 @@ public class CommandTest {
 			assertEquals(cmd.getDesc(), "class command");
 			assertFalse(cmd.getCommand("help").isPresent());
 		});
+
+		reg.registerCommand(new LimitedHelperCommand());
+
+		Optional<Command> limitedCommand = reg.getCommand("limited");
+		assertTrue(limitedCommand.isPresent());
+		limitedCommand.ifPresent(cmd -> {
+			assertFalse(cmd.getCommand("info").isPresent());
+			assertFalse(cmd.getCommand("help").isPresent());
+			assertTrue(cmd.getCommand("alias").isPresent());
+
+			cmd.getCommands().clear();
+			cmd.addHelperCommands(HelperCommandType.ALL);
+			assertTrue(cmd.getCommand("info").isPresent());
+			assertTrue(cmd.getCommand("help").isPresent());
+			assertTrue(cmd.getCommand("alias").isPresent());
+		});
 	}
 
 	public class AnnotatedCommands {
@@ -75,6 +92,29 @@ public class CommandTest {
 		@Override
 		public String getDesc() {
 			return "class command";
+		}
+
+		@Override
+		public void onExecute(MessageReceivedEvent event, MessageBuilder msg, LinkedList<String> args) throws Exception {
+
+		}
+
+	}
+
+	public class LimitedHelperCommand extends SimpleCommand {
+
+		public LimitedHelperCommand() {
+			addHelperCommands(HelperCommandType.ALIAS);
+		}
+
+		@Override
+		public String getName() {
+			return "limited";
+		}
+
+		@Override
+		public String getDesc() {
+			return "limited command";
 		}
 
 		@Override
