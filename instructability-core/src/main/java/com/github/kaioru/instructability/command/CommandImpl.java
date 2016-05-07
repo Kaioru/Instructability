@@ -47,6 +47,11 @@ public abstract class CommandImpl implements Command {
 
 	public void registerCommand(Command cmd) {
 		this.commands.add(cmd);
+		Instructables.LOGGER.info(
+				"Registered command '{}' to '{}'",
+				cmd.getName(),
+				this.getName()
+		);
 	}
 
 	public void registerCommands(Object object) {
@@ -70,6 +75,11 @@ public abstract class CommandImpl implements Command {
 
 	public void unregisterCommand(Command cmd) {
 		this.commands.remove(cmd);
+		Instructables.LOGGER.info(
+				"De-registered command '{}' from '{}'",
+				cmd.getName(),
+				this.getName()
+		);
 	}
 
 	public void unregisterCommands(Object object) {
