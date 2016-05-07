@@ -1,10 +1,11 @@
 package com.github.kaioru.instructability.command;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import com.github.kaioru.instructability.Instructables;
 
-public interface Command extends CommandExecutable {
+import java.util.List;
+import java.util.stream.Collectors;
+
+public interface Command extends CommandExecutor {
 
 	String getName();
 
@@ -14,38 +15,49 @@ public interface Command extends CommandExecutable {
 
 	List<Command> getCommands();
 
-	CommandExecutable getExecutable();
-
-	default Optional<Command> getCommand(String name) {
+	default List<Command> getCommand(String name) {
 		return getCommands().stream()
 				.filter(cmd -> cmd.getName().startsWith(name)
 						|| cmd.getAliases().stream().anyMatch(s -> s.startsWith(name)))
-				.findFirst();
+				.collect(Collectors.toList());
 	}
 
-	default Optional<Command> process(LinkedList<String> args) {
-		if (args.size() > 1) {
-			String first = args.removeFirst();
-			Optional<Command> opt = getCommand(first);
-
-			if (opt.isPresent())
-				return opt;
-		}
-
-		return Optional.empty();
+	default void registerCommand(Command cmd) {
+		getCommands().add(cmd);
+		Instructables.LOGGER.info(
+				"Registered command '{}' to '{}'",
+				cmd.getName(),
+				getName()
+		);
 	}
 
-	default void execute(LinkedList<String> args) throws Exception {
-		Optional<Command> opt = process(args);
+	default void unregisterCommand(Command cmd) {
+		getCommands().remove(cmd);
+		Instructables.LOGGER.info(
+				"Unregistered command '{}' from '{}'",
+				cmd.getName(),
+				getName()
+		);
+	}
 
-		if (opt.isPresent()) {
-			Command cmd = opt.get();
+	List<CommandVerifier> getPreVerifiers();
 
-			cmd.execute(args);
-			return;
-		}
+	List<CommandVerifier> getPostVerifiers();
 
-		this.getExecutable().execute(args);
+	default void registerPreVerifier(CommandVerifier verifier) {
+		getPreVerifiers().add(verifier);
+	}
+
+	default void deregisterPreVerifier(CommandVerifier verifier) {
+		getPreVerifiers().remove(verifier);
+	}
+
+	default void registerPostVerifier(CommandVerifier verifier) {
+		getPostVerifiers().add(verifier);
+	}
+
+	default void deregisterPostVerifier(CommandVerifier verifier) {
+		getPostVerifiers().remove(verifier);
 	}
 
 }

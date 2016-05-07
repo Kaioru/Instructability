@@ -1,23 +1,19 @@
 package com.github.kaioru.instructability.command;
 
-import com.github.kaioru.instructability.command.annotated.AnnotatedCommandBuilder;
-import com.github.kaioru.instructability.command.annotated.AnnotatedCommandExecutable;
-import com.github.kaioru.instructability.command.annotated.BasicCommand;
-
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class CommandImpl implements Command {
 
 	private final List<String> aliases;
 	private final List<Command> commands;
+	private final List<CommandVerifier> preVerifiers, postVerifiers;
 
 	public CommandImpl() {
 		this.aliases = new ArrayList<>();
 		this.commands = new ArrayList<>();
+		this.preVerifiers = new ArrayList<>();
+		this.postVerifiers = new ArrayList<>();
 	}
 
 	@Override
@@ -31,77 +27,13 @@ public abstract class CommandImpl implements Command {
 	}
 
 	@Override
-	public CommandExecutable getExecutable() {
-		return this::onCommand;
-	}
-
-	public abstract void onCommand(LinkedList<String> args) throws Exception;
-
-	public void addAlias(String alias) {
-		this.aliases.add(alias);
-	}
-
-	public void removeAlias(String alias) {
-		this.aliases.remove(alias);
-	}
-
-	public void registerCommand(Command cmd) {
-		this.commands.add(cmd);
-		Instructables.LOGGER.info(
-				"Registered command '{}' to '{}'",
-				cmd.getName(),
-				this.getName()
-		);
-	}
-
-	public void registerCommands(Object object) {
-		for (Method method : object.getClass().getMethods()) {
-			if (method.isAnnotationPresent(BasicCommand.class)) {
-				BasicCommand a = method.getAnnotation(BasicCommand.class);
-
-				if (method.getParameterCount() == a.parameterCount()) {
-					registerCommand(new AnnotatedCommandBuilder(a.name())
-							.desc(a.desc())
-							.build((AnnotatedCommandExecutable) (args, params) -> {
-								if (a.parameterCount() == 1)
-									method.invoke(object, args);
-								else
-									method.invoke(object, args, params);
-							}));
-				}
-			}
-		}
-	}
-
-	public void unregisterCommand(Command cmd) {
-		this.commands.remove(cmd);
-		Instructables.LOGGER.info(
-				"De-registered command '{}' from '{}'",
-				cmd.getName(),
-				this.getName()
-		);
-	}
-
-	public void unregisterCommands(Object object) {
-		for (Method method : object.getClass().getDeclaredMethods()) {
-			if (method.isAnnotationPresent(BasicCommand.class)) {
-				BasicCommand a = method.getAnnotation(BasicCommand.class);
-
-				if (method.getParameterCount() == a.parameterCount()) {
-					List<Command> cmds = commands.stream()
-							.filter(c -> c.getName().equals(a.name())
-									&& c.getDesc().equals(a.desc()))
-							.collect(Collectors.toList());
-
-					cmds.forEach(this::unregisterCommand);
-				}
-			}
-		}
+	public List<CommandVerifier> getPreVerifiers() {
+		return preVerifiers;
 	}
 
 	@Override
-	public String toString() {
-		return getName() + " - " + getDesc();
+	public List<CommandVerifier> getPostVerifiers() {
+		return postVerifiers;
 	}
 
 }
