@@ -24,12 +24,25 @@ public interface Discord4JCommand extends Command, Discord4JCommandExecutable {
 			return;
 		}
 
+		if (!allowPrivateMessage())
+			if (event.getMessage().getChannel().isPrivate())
+				return;
+
 		this.getExecutable().execute(args, event, msg);
+
+		if (removeTriggerMessage())
+			event.getMessage().delete();
 	}
 
 	@Override
 	default void execute(LinkedList<String> args) throws Exception {}
 
 	Discord4JCommandExecutable getExecutable();
+
+	default boolean removeTriggerMessage() {
+		return true;
+	}
+
+	default boolean allowPrivateMessage() { return false; }
 
 }

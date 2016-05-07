@@ -16,12 +16,6 @@ public interface Command extends CommandExecutable {
 
 	CommandExecutable getExecutable();
 
-	default boolean removeTriggerMessage() {
-		return true;
-	}
-
-	default boolean allowPrivateMessage() { return false; }
-
 	default Optional<Command> getCommand(String name) {
 		return getCommands().stream()
 				.filter(cmd -> cmd.getName().startsWith(name)
