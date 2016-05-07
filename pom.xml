@@ -3,11 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.kaioru</groupId>
-    <artifactId>Instructability</artifactId>
+    <artifactId>instructability</artifactId>
     <version>0.2.0</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>instructability-core</module>
+        <module>instructability-discord4j</module>
+    </modules>
+    <packaging>pom</packaging>
 
-    <name>Instructability</name>
+    <name>instructability</name>
     <url>https://github.com/Kaioru/Instructability</url>
 
     <properties>
@@ -58,12 +62,6 @@
             <artifactId>logback-classic</artifactId>
             <version>1.1.6</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.austinv11</groupId>
-            <artifactId>Discord4J</artifactId>
-            <version>2.4.7</version>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>
