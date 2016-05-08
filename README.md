@@ -40,7 +40,7 @@ client.getModuleLoader().loadModule(new InstructabilityModule());
 ###### @Mention
 ``` java
 client.getDispatcher().registerListener((IListener<ReadyEvent>) event -> // Ensures 'getOurUser()' is not null
-        Instructables.getRegistry().setCommandPrefix(client.getOurUser().mention() + " ")
+        Instructables.getRegistry().setPrefix(client.getOurUser().mention() + " ")
 );
 ```
 ###### Everything else
