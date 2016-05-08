@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Discord4JCommand extends CommandImpl {
+public abstract class Discord4JCommand extends CommandImpl implements Discord4JCommandExecutor {
 
 	public Discord4JCommand() {
 		registerPreVerifier((Discord4JCommandVerifier) (args, event, msg) -> {
@@ -117,7 +117,5 @@ public abstract class Discord4JCommand extends CommandImpl {
 
 	@Override
 	public void execute(LinkedList<String> args) throws Exception {}
-
-	public abstract void execute(LinkedList<String> args, MessageReceivedEvent event, MessageBuilder msg) throws Exception;
 
 }
