@@ -4,6 +4,7 @@ import com.github.kaioru.instructability.Defaults;
 import com.github.kaioru.instructability.command.Command;
 import com.github.kaioru.instructability.command.CommandVerifier;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
+import sx.blah.discord.handle.obj.Permissions;
 import sx.blah.discord.util.MessageBuilder;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class Discord4JCommandBuilder {
 	private final List<CommandVerifier> preVerifiers, postVerifiers;
 	private String desc;
 	private String permission;
+	private Permissions discordPermission;
 	private boolean allowPrivateMessage;
 	private boolean removeTriggerMessage;
 
@@ -62,6 +64,11 @@ public class Discord4JCommandBuilder {
 
 	public Discord4JCommandBuilder post(Discord4JCommandVerifier commandVerifier) {
 		this.postVerifiers.add(commandVerifier);
+		return this;
+	}
+
+	public Discord4JCommandBuilder permission(Permissions permission) {
+		this.discordPermission = permission;
 		return this;
 	}
 
@@ -115,6 +122,11 @@ public class Discord4JCommandBuilder {
 			@Override
 			public List<CommandVerifier> getPostVerifiers() {
 				return postVerifiers;
+			}
+
+			@Override
+			public Permissions getDiscordPermission() {
+				return discordPermission;
 			}
 
 			@Override

@@ -3,6 +3,7 @@ package com.github.kaioru.instructability.jda;
 import com.github.kaioru.instructability.Defaults;
 import com.github.kaioru.instructability.command.Command;
 import com.github.kaioru.instructability.command.CommandVerifier;
+import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class JDACommandBuilder {
 	private final List<CommandVerifier> preVerifiers, postVerifiers;
 	private String desc;
 	private String permission;
+	private Permission discordPermission;
 	private boolean allowPrivateMessage;
 	private boolean removeTriggerMessage;
 
@@ -29,6 +31,8 @@ public class JDACommandBuilder {
 		this.commands = new ArrayList<>();
 		this.preVerifiers = new ArrayList<>();
 		this.postVerifiers = new ArrayList<>();
+
+		this.discordPermission = Permission.MESSAGE_WRITE;
 
 		this.allowPrivateMessage = true;
 		this.removeTriggerMessage = true;
@@ -61,6 +65,11 @@ public class JDACommandBuilder {
 
 	public JDACommandBuilder post(JDACommandVerifier commandVerifier) {
 		this.postVerifiers.add(commandVerifier);
+		return this;
+	}
+
+	public JDACommandBuilder permission(Permission permission) {
+		this.discordPermission = permission;
 		return this;
 	}
 
@@ -114,6 +123,11 @@ public class JDACommandBuilder {
 			@Override
 			public List<CommandVerifier> getPostVerifiers() {
 				return postVerifiers;
+			}
+
+			@Override
+			public Permission getDiscordPermission() {
+				return discordPermission;
 			}
 
 			@Override

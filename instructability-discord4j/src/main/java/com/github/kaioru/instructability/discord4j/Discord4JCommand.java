@@ -23,7 +23,7 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 		registerPreVerifier((Discord4JCommandVerifier) (args, event, msg) ->
 				event.getMessage().getAuthor().getRolesForGuild(event.getMessage().getGuild())
 						.stream()
-						.anyMatch(role -> getDiscordPermissions()
+						.anyMatch(role -> getDiscordPermission()
 								.hasPermission(Permissions.generatePermissionsNumber(role.getPermissions()), true))
 		);
 		registerPreVerifier((Discord4JCommandVerifier) (args, event, msg) -> {
@@ -134,7 +134,7 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 		return Defaults.REMOVE_TRIGGER_MESSAGE;
 	}
 
-	public Permissions getDiscordPermissions() {
+	public Permissions getDiscordPermission() {
 		return Permissions.SEND_MESSAGES;
 	}
 
