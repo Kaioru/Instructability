@@ -46,6 +46,8 @@ public interface Command extends CommandExecutor {
 
 	List<CommandVerifier> getPostVerifiers();
 
+	default boolean addHelperCommands() { return true; }
+
 	default void registerPreVerifier(CommandVerifier verifier) {
 		getPreVerifiers().add(verifier);
 	}

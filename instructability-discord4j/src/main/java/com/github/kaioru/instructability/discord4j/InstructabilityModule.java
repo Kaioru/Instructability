@@ -1,6 +1,7 @@
 package com.github.kaioru.instructability.discord4j;
 
 import com.github.kaioru.instructability.Instructables;
+import com.github.kaioru.instructability.discord4j.helper.Discord4JHelpCommand;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.modules.IModule;
 
@@ -21,6 +22,7 @@ public class InstructabilityModule implements IModule {
 		this.client = client;
 
 		client.getDispatcher().registerListener(listener);
+		Instructables.getRegistry().registerCommand(new Discord4JHelpCommand(Instructables.getRegistry()));
 		Instructables.LOGGER.info(getName() + " Discord4J Command Listener registered");
 		return true;
 	}
