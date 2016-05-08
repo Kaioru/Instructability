@@ -8,6 +8,8 @@
     <modules>
         <module>instructability-core</module>
         <module>instructability-discord4j</module>
+        <module>instructability-javacord</module>
+        <module>instructability-jda</module>
     </modules>
     <packaging>pom</packaging>
 
