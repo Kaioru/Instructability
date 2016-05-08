@@ -15,10 +15,10 @@ public @interface Discord4JAnnotatedCommand {
 
 	String desc() default Defaults.DESCRIPTION;
 
-	String perm() default "";
+	String perm() default Defaults.PERMISSION;
 
-	boolean allowPrivateMessage() default false;
+	boolean allowPrivateMessage() default Defaults.ALLOW_PRIVATE_MESSAGE;
 
-	boolean removeTriggerMessage() default true;
+	boolean removeTriggerMessage() default Defaults.REMOVE_TRIGGER_MESSAGE;
 
 }

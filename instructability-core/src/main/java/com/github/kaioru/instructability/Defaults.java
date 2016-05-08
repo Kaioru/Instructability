@@ -7,5 +7,8 @@ public class Defaults {
 	public static final String REGISTRY_PREFIX = ".";
 
 	public static final String DESCRIPTION = "No description";
+	public static final String PERMISSION = "";
+	public static final boolean ALLOW_PRIVATE_MESSAGE = false;
+	public static final boolean REMOVE_TRIGGER_MESSAGE = true;
 
 }
