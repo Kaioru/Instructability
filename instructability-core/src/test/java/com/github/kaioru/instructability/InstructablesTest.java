@@ -1,6 +1,7 @@
 package com.github.kaioru.instructability;
 
 import com.github.kaioru.instructability.command.CommandImpl;
+import com.github.kaioru.instructability.command.CommandReference;
 import com.github.kaioru.instructability.command.CommandRegistry;
 import com.github.kaioru.instructability.command.CommandVerifier;
 import com.github.kaioru.instructability.util.PermissionUtil;
@@ -39,6 +40,9 @@ public class InstructablesTest extends TestCase {
 		reg.registerCommand(new MultiParamCommand());
 		reg.execute("multi 'from the outside'", "hello");
 
+		reg.registerCommands(new InstructablesTest());
+		reg.execute("reference inside!");
+
 		assertTrue(PermissionUtil.checkPermission("*", "permission.test"));
 		assertTrue(PermissionUtil.checkPermission("permission.*", "permission.test"));
 		assertTrue(PermissionUtil.checkPermission("permission.*", "permission.ing"));
@@ -49,6 +53,28 @@ public class InstructablesTest extends TestCase {
 		assertTrue(PermissionUtil.checkPermission("permission.test.*", "permission.test.ed"));
 		assertTrue(PermissionUtil.checkPermission("permission", ""));
 		assertFalse(PermissionUtil.checkPermission("test", "permission.test"));
+	}
+
+	@CommandReference
+	public CommandImpl getReferencedCommand() {
+		return new CommandImpl() {
+
+			@Override
+			public String getName() {
+				return "reference";
+			}
+
+			@Override
+			public String getDesc() {
+				return Defaults.DESCRIPTION;
+			}
+
+			@Override
+			public void execute(LinkedList<String> args) throws Exception {
+				assertEquals("inside!", args.removeFirst());
+			}
+
+		};
 	}
 
 	@FunctionalInterface
