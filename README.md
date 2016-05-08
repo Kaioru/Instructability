@@ -1,5 +1,5 @@
 # Instructability [![Build Status](https://travis-ci.org/Kaioru/Instructability.svg?branch=master)](https://travis-ci.org/Kaioru/Instructability) [![](https://jitpack.io/v/Kaioru/Instructability.svg)](https://jitpack.io/#Kaioru/Instructability)
-Instructability is a Commands API primarily written for Discord4J. Although, there will be future support for other Discord Bot libraries.
+Instructability is a Commands API primarily written for Discord4J, Javacord and JDA. Though, it can be easily modified to fit in any system.
 
 ## Usage
 ### For Discord4J
