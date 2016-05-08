@@ -20,7 +20,7 @@ And viola! Everything is now done and working!
 ```
 ```xml
 <dependency>
-    <groupId>com.github.Kaioru.instructability</groupId>
+    <groupId>com.github.Kaioru</groupId>
     <artifactId>instructability</artifactId>
     <version>@VERSION@</version>
 </dependency>
