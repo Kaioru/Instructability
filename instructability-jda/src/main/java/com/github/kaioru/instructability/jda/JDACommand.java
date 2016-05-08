@@ -100,7 +100,7 @@ public abstract class JDACommand extends CommandImpl implements JDACommandExecut
 				});
 			}
 			if (method.isAnnotationPresent(JDAAnnotatedReference.class))
-				registerCommand((Command) method.invoke(this));
+				registerCommand((JDACommand) method.invoke(object));
 		}
 		return this;
 	}
@@ -116,7 +116,7 @@ public abstract class JDACommand extends CommandImpl implements JDACommandExecut
 						.collect(Collectors.toList());
 			}
 			if (method.isAnnotationPresent(JDAAnnotatedReference.class)) {
-				Command cmd = (Command) method.invoke(this);
+				Command cmd = (Command) method.invoke(object);
 				toRemove = getCommands().stream()
 						.filter(c -> c.getName().equals(cmd.getName())
 								&& c.getDesc().equals(cmd.getDesc()))

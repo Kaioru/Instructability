@@ -95,7 +95,7 @@ public abstract class JavacordCommand extends CommandImpl implements JavacordCom
 				});
 			}
 			if (method.isAnnotationPresent(JavacordAnnotatedReference.class))
-				registerCommand((Command) method.invoke(this));
+				registerCommand((JavacordCommand) method.invoke(object));
 		}
 		return this;
 	}
@@ -111,7 +111,7 @@ public abstract class JavacordCommand extends CommandImpl implements JavacordCom
 						.collect(Collectors.toList());
 			}
 			if (method.isAnnotationPresent(JavacordAnnotatedReference.class)) {
-				Command cmd = (Command) method.invoke(this);
+				Command cmd = (Command) method.invoke(object);
 				toRemove = getCommands().stream()
 						.filter(c -> c.getName().equals(cmd.getName())
 								&& c.getDesc().equals(cmd.getDesc()))

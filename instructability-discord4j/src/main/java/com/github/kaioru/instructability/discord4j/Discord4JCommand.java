@@ -101,7 +101,7 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 				});
 			}
 			if (method.isAnnotationPresent(Discord4JAnnotatedReference.class))
-				registerCommand((Command) method.invoke(this));
+				registerCommand((Discord4JCommand) method.invoke(object));
 		}
 		return this;
 	}
@@ -117,7 +117,7 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 						.collect(Collectors.toList());
 			}
 			if (method.isAnnotationPresent(Discord4JAnnotatedReference.class)) {
-				Command cmd = (Command) method.invoke(this);
+				Command cmd = (Command) method.invoke(object);
 				toRemove = getCommands().stream()
 						.filter(c -> c.getName().equals(cmd.getName())
 								&& c.getDesc().equals(cmd.getDesc()))

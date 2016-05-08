@@ -84,6 +84,52 @@ cmd.registerCommands(new AnnotationCommands());
 Instructables.getRegistry().registerCommand(cmd);
 ```
 It is currently not possible to add Annotated commands directly to the CommandRegistry. It will be fixed in the next update
+###### Using a CommandReference
+``` java
+public class ReferenceCommands {
+    @Discord4JAnnotatedReference
+    public Discord4JCommand getCommand() {
+        return new Discord4JCommand() {
+            @Override
+            public String getName() {
+                return "reference";
+            }
+
+            @Override
+            public String getDesc() {
+                return Defaults.DESCRIPTION;
+            }
+
+            @Override
+            public void execute(LinkedList<String> args, MessageReceivedEvent event, MessageBuilder msg) throws Exception {
+                msg.appendContent("Hello world!")
+                        .build();
+            }
+        };
+    }
+}
+```
+``` java
+public class ReferenceMiddlewareCommand extends Discord4JCommand {
+	@Override
+	public String getName() {
+		return "reference";
+	}
+
+	@Override
+	public String getDesc() {
+		return Defaults.DESCRIPTION;
+	}
+
+	@Override
+	public void execute(LinkedList<String> args, MessageReceivedEvent event, MessageBuilder msg) throws Exception {}
+}
+```
+``` java
+ReferenceMiddlewareCommand cmd = new ReferenceMiddlewareCommand();
+cmd.registerCommands(new ReferenceCommands());
+Instructables.getRegistry().registerCommand(cmd);
+```
 ###### Using the Builder
 ``` java
 Instructables.getRegistry()
