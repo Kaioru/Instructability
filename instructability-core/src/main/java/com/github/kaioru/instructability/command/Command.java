@@ -11,6 +11,8 @@ public interface Command extends CommandExecutor {
 
 	String getDesc();
 
+	String getPermission();
+
 	List<String> getAliases();
 
 	List<Command> getCommands();

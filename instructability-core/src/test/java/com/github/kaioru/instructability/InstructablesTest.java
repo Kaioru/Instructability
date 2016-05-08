@@ -3,6 +3,7 @@ package com.github.kaioru.instructability;
 import com.github.kaioru.instructability.command.CommandImpl;
 import com.github.kaioru.instructability.command.CommandRegistry;
 import com.github.kaioru.instructability.command.CommandVerifier;
+import com.github.kaioru.instructability.util.PermissionUtil;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -37,6 +38,17 @@ public class InstructablesTest extends TestCase {
 
 		reg.registerCommand(new MultiParamCommand());
 		reg.execute("multi 'from the outside'", "hello");
+
+		assertTrue(PermissionUtil.checkPermission("*", "permission.test"));
+		assertTrue(PermissionUtil.checkPermission("permission.*", "permission.test"));
+		assertTrue(PermissionUtil.checkPermission("permission.*", "permission.ing"));
+		assertTrue(PermissionUtil.checkPermission("permission.test", "permission.test"));
+		assertTrue(PermissionUtil.checkPermission("permission.test.ing", "permission.test"));
+		assertTrue(PermissionUtil.checkPermission("permission.test", "permission.test.ing"));
+		assertTrue(PermissionUtil.checkPermission("permission.test", "permission.test.ed"));
+		assertTrue(PermissionUtil.checkPermission("permission.test.*", "permission.test.ed"));
+		assertTrue(PermissionUtil.checkPermission("permission", ""));
+		assertFalse(PermissionUtil.checkPermission("test", "permission.test"));
 	}
 
 	@FunctionalInterface
@@ -57,7 +69,7 @@ public class InstructablesTest extends TestCase {
 
 		@Override
 		public String getDesc() {
-			return null;
+			return Defaults.DESCRIPTION;
 		}
 
 		@Override
@@ -87,7 +99,7 @@ public class InstructablesTest extends TestCase {
 
 		@Override
 		public String getDesc() {
-			return null;
+			return Defaults.DESCRIPTION;
 		}
 
 		@Override

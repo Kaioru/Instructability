@@ -1,5 +1,7 @@
 package com.github.kaioru.instructability.discord4j;
 
+import com.github.kaioru.instructability.Defaults;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,7 +13,9 @@ public @interface Discord4JAnnotatedCommand {
 
 	String name();
 
-	String desc() default "No description";
+	String desc() default Defaults.DESCRIPTION;
+
+	String perm() default "";
 
 	boolean allowPrivateMessage() default false;
 

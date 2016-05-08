@@ -1,7 +1,9 @@
 package com.github.kaioru.instructability.discord4j;
 
+import com.github.kaioru.instructability.Instructables;
 import com.github.kaioru.instructability.command.Command;
 import com.github.kaioru.instructability.command.CommandImpl;
+import com.github.kaioru.instructability.util.PermissionUtil;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.util.MessageBuilder;
 
@@ -15,6 +17,26 @@ import java.util.stream.Collectors;
 public abstract class Discord4JCommand extends CommandImpl {
 
 	public Discord4JCommand() {
+		registerPreVerifier((Discord4JCommandVerifier) (args, event, msg) -> {
+			String guildId = event.getMessage().getGuild().getID();
+			String userId = event.getMessage().getAuthor().getID();
+
+			return Instructables.getPermissionRegistry()
+					.getPermissions(String.format("%s:%s", guildId, userId))
+					.get()
+					.stream()
+					.anyMatch(s -> PermissionUtil.checkPermission(s, getPermission()))
+					|| event.getMessage().getAuthor().getRolesForGuild(event.getMessage().getGuild())
+					.stream()
+					.anyMatch(roleId ->
+							Instructables.getPermissionRegistry()
+									.getPermissions(String.format("%s:%s", guildId, roleId))
+									.get()
+									.stream()
+									.anyMatch(s -> PermissionUtil.checkPermission(s, getPermission()))
+					);
+		});
+
 		if (!allowPrivateMessage())
 			registerPreVerifier((Discord4JCommandVerifier) (args, event, msg) ->
 					!event.getMessage().getChannel().isPrivate());
@@ -42,6 +64,9 @@ public abstract class Discord4JCommand extends CommandImpl {
 					public String getDesc() {
 						return a.desc();
 					}
+
+					@Override
+					public String getPermission() { return a.perm(); }
 
 					@Override
 					public boolean allowPrivateMessage() {
