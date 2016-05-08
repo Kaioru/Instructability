@@ -6,6 +6,12 @@ import java.util.LinkedList;
 
 public class CommandRegistry extends CommandImpl {
 
+	private final String prefix;
+
+	public CommandRegistry() {
+		this.prefix = ".";
+	}
+
 	@Override
 	public String getName() {
 		return "registry";
@@ -14,6 +20,10 @@ public class CommandRegistry extends CommandImpl {
 	@Override
 	public String getDesc() {
 		return "The root command for everything!";
+	}
+
+	public String getPrefix() {
+		return prefix;
 	}
 
 	@Override
