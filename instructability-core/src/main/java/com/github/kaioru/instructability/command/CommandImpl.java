@@ -1,5 +1,7 @@
 package com.github.kaioru.instructability.command;
 
+import com.github.kaioru.instructability.Defaults;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public abstract class CommandImpl implements Command {
 	}
 
 	@Override
-	public String getPermission() { return ""; }
+	public String getPermission() { return Defaults.PERMISSION; }
 
 	@Override
 	public List<String> getAliases() {

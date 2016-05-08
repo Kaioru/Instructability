@@ -48,7 +48,7 @@ public class InstructabilityModule implements IModule {
 
 	@Override
 	public String getMinimumDiscord4JVersion() {
-		return "2.4.6";
+		return "2.4.0";
 	}
 
 }
