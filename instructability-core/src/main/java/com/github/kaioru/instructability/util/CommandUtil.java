@@ -33,7 +33,6 @@ public class CommandUtil {
 			Optional<Command> opt = cmd.getCommand(first)
 					.stream()
 					.findFirst();
-
 			if (opt.isPresent()) {
 				executeCommand(opt.get(), args, params);
 				return;
