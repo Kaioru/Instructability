@@ -57,7 +57,10 @@ public abstract class JavacordCommand extends CommandImpl implements JavacordCom
 		}
 	}
 
+	@Override
 	public JavacordCommand registerCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+		super.registerCommands(object);
+
 		for (Method method : object.getClass().getMethods()) {
 			if (method.isAnnotationPresent(JavacordAnnotatedCommand.class)) {
 				JavacordAnnotatedCommand a = method.getAnnotation(JavacordAnnotatedCommand.class);
@@ -94,13 +97,14 @@ public abstract class JavacordCommand extends CommandImpl implements JavacordCom
 
 				});
 			}
-			if (method.isAnnotationPresent(JavacordAnnotatedReference.class))
-				registerCommand((JavacordCommand) method.invoke(object));
 		}
 		return this;
 	}
 
+	@Override
 	public JavacordCommand unregisterCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+		super.unregisterCommands(object);
+
 		for (Method method : object.getClass().getDeclaredMethods()) {
 			List<Command> toRemove = new ArrayList<>();
 			if (method.isAnnotationPresent(JavacordAnnotatedCommand.class)) {
@@ -108,13 +112,6 @@ public abstract class JavacordCommand extends CommandImpl implements JavacordCom
 				toRemove = getCommands().stream()
 						.filter(c -> c.getName().equals(a.name())
 								&& c.getDesc().equals(a.desc()))
-						.collect(Collectors.toList());
-			}
-			if (method.isAnnotationPresent(JavacordAnnotatedReference.class)) {
-				Command cmd = (Command) method.invoke(object);
-				toRemove = getCommands().stream()
-						.filter(c -> c.getName().equals(cmd.getName())
-								&& c.getDesc().equals(cmd.getDesc()))
 						.collect(Collectors.toList());
 			}
 			toRemove.forEach(this::unregisterCommand);

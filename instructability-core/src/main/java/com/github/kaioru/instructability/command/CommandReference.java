@@ -1,4 +1,4 @@
-package com.github.kaioru.instructability.jda;
+package com.github.kaioru.instructability.command;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,5 +7,5 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface JDAAnnotatedReference {
+public @interface CommandReference {
 }

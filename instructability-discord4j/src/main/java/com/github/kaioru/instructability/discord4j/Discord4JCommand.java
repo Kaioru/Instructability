@@ -63,7 +63,10 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 		}
 	}
 
+	@Override
 	public Discord4JCommand registerCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+		super.registerCommands(object);
+
 		for (Method method : object.getClass().getMethods()) {
 			if (method.isAnnotationPresent(Discord4JAnnotatedCommand.class)) {
 				Discord4JAnnotatedCommand a = method.getAnnotation(Discord4JAnnotatedCommand.class);
@@ -100,13 +103,14 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 
 				});
 			}
-			if (method.isAnnotationPresent(Discord4JAnnotatedReference.class))
-				registerCommand((Discord4JCommand) method.invoke(object));
 		}
 		return this;
 	}
 
+	@Override
 	public Discord4JCommand unregisterCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+		super.unregisterCommands(object);
+
 		for (Method method : object.getClass().getDeclaredMethods()) {
 			List<Command> toRemove = new ArrayList<>();
 			if (method.isAnnotationPresent(Discord4JAnnotatedCommand.class)) {
@@ -114,13 +118,6 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 				toRemove = getCommands().stream()
 						.filter(c -> c.getName().equals(a.name())
 								&& c.getDesc().equals(a.desc()))
-						.collect(Collectors.toList());
-			}
-			if (method.isAnnotationPresent(Discord4JAnnotatedReference.class)) {
-				Command cmd = (Command) method.invoke(object);
-				toRemove = getCommands().stream()
-						.filter(c -> c.getName().equals(cmd.getName())
-								&& c.getDesc().equals(cmd.getDesc()))
 						.collect(Collectors.toList());
 			}
 			toRemove.forEach(this::unregisterCommand);

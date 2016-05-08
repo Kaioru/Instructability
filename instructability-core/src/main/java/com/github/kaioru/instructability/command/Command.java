@@ -2,6 +2,8 @@ package com.github.kaioru.instructability.command;
 
 import com.github.kaioru.instructability.Instructables;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +43,28 @@ public interface Command extends CommandExecutor {
 				cmd.getName(),
 				getName()
 		);
+		return this;
+	}
+
+	default Command registerCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+		for (Method method : object.getClass().getMethods()) {
+			if (method.isAnnotationPresent(CommandReference.class))
+				registerCommand((Command) method.invoke(object));
+		}
+		return this;
+	}
+
+	default Command unregisterCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+		for (Method method : object.getClass().getDeclaredMethods()) {
+			if (method.isAnnotationPresent(CommandReference.class)) {
+				Command cmd = (Command) method.invoke(object);
+
+				getCommands().stream()
+						.filter(c -> c.getName().equals(cmd.getName())
+								&& c.getDesc().equals(cmd.getDesc()))
+						.forEach(this::unregisterCommand);
+			}
+		}
 		return this;
 	}
 
