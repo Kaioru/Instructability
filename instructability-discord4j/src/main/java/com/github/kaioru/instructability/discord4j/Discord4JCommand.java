@@ -19,6 +19,9 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 
 	public Discord4JCommand() {
 		registerPreVerifier((Discord4JCommandVerifier) (args, event, msg) -> {
+			if (getPermission().equals(Defaults.PERMISSION))
+				return true;
+
 			String guildId = event.getMessage().getGuild().getID();
 			String userId = event.getMessage().getAuthor().getID();
 
