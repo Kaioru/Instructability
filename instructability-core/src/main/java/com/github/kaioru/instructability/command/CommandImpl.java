@@ -17,6 +17,9 @@ public abstract class CommandImpl implements Command {
 	}
 
 	@Override
+	public String getPermission() { return ""; }
+
+	@Override
 	public List<String> getAliases() {
 		return aliases;
 	}

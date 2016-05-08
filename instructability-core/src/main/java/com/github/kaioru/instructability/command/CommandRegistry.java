@@ -1,5 +1,6 @@
 package com.github.kaioru.instructability.command;
 
+import com.github.kaioru.instructability.Defaults;
 import com.github.kaioru.instructability.util.CommandUtil;
 
 import java.util.LinkedList;
@@ -9,17 +10,17 @@ public class CommandRegistry extends CommandImpl {
 	private final String prefix;
 
 	public CommandRegistry() {
-		this.prefix = ".";
+		this.prefix = Defaults.REGISTRY_PREFIX;
 	}
 
 	@Override
 	public String getName() {
-		return "registry";
+		return Defaults.REGISTRY_NAME;
 	}
 
 	@Override
 	public String getDesc() {
-		return "The root command for everything!";
+		return Defaults.REGISTRY_DESC;
 	}
 
 	public String getPrefix() {
