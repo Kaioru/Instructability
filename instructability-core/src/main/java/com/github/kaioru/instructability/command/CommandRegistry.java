@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class CommandRegistry extends CommandImpl {
 
-	private final String prefix;
+	private String prefix;
 
 	public CommandRegistry() {
 		this.prefix = Defaults.REGISTRY_PREFIX;
@@ -25,6 +25,10 @@ public class CommandRegistry extends CommandImpl {
 
 	public String getPrefix() {
 		return prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
 	}
 
 	@Override
