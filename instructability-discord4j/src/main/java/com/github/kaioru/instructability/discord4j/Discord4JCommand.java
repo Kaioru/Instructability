@@ -4,6 +4,7 @@ import com.github.kaioru.instructability.Defaults;
 import com.github.kaioru.instructability.Instructables;
 import com.github.kaioru.instructability.command.Command;
 import com.github.kaioru.instructability.command.CommandImpl;
+import com.github.kaioru.instructability.discord4j.helper.Discord4JHelpCommand;
 import com.github.kaioru.instructability.util.PermissionUtil;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.util.MessageBuilder;
@@ -50,6 +51,10 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 				event.getMessage().delete();
 				return true;
 			});
+
+		if (addHelperCommands()) {
+			registerCommand(new Discord4JHelpCommand(this));
+		}
 	}
 
 	public void registerCommands(Object object) throws InvocationTargetException, IllegalAccessException {
