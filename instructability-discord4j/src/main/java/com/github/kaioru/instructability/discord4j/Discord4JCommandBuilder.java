@@ -17,12 +17,14 @@ public class Discord4JCommandBuilder {
 	private final List<Command> commands;
 	private final List<CommandVerifier> preVerifiers, postVerifiers;
 	private String desc;
+	private String permission;
 	private boolean allowPrivateMessage;
 	private boolean removeTriggerMessage;
 
 	public Discord4JCommandBuilder(String name) {
 		this.name = name;
 		this.desc = Defaults.DESCRIPTION;
+		this.permission = Defaults.PERMISSION;
 
 		this.aliases = new ArrayList<>();
 		this.commands = new ArrayList<>();
@@ -35,6 +37,11 @@ public class Discord4JCommandBuilder {
 
 	public Discord4JCommandBuilder desc(String desc) {
 		this.desc = desc;
+		return this;
+	}
+
+	public Discord4JCommandBuilder permission(String permission) {
+		this.permission = permission;
 		return this;
 	}
 
@@ -83,6 +90,11 @@ public class Discord4JCommandBuilder {
 			@Override
 			public String getDesc() {
 				return desc;
+			}
+
+			@Override
+			public String getPermission() {
+				return permission;
 			}
 
 			@Override
