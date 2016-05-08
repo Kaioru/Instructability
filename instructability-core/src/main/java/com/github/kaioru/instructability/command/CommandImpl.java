@@ -36,4 +36,13 @@ public abstract class CommandImpl implements Command {
 		return postVerifiers;
 	}
 
+	@Override
+	public String toString() {
+		return String.format(
+				"%s - %s",
+				getName(),
+				getDesc()
+		);
+	}
+
 }
