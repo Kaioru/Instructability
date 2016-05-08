@@ -9,7 +9,25 @@ Simply add the ```instructability-discord4j.jar``` file downloaded from the [Rel
 And viola! Everything is now done and working!
 #### In a project
 ##### Step 1 - Adding the dependencies
-Instructions on this step can be found on [JitPack](https://jitpack.io/#Kaioru/Instructability)
+###### Maven
+```xml
+<repositories>
+	<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
+</repositories>
+```
+```xml
+<dependency>
+    <groupId>com.github.Kaioru.instructability</groupId>
+    <artifactId>instructability</artifactId>
+    <version>@VERSION@</version>
+</dependency>
+```
+Where @VERSION@ is the version you wish to use of Instructability.
+
+Further instructions on this step can be found on [JitPack](https://jitpack.io/#Kaioru/Instructability)
 ##### Step 2 - Enabling the module
 ``` java
 IDiscordClient client = new ClientBuilder()
