@@ -13,7 +13,7 @@ public class InstructablesTest extends TestCase {
 
 	@Test
 	public void test() throws Exception {
-		CommandRegistry reg = Instructables.getRegistry();
+		CommandRegistry reg = Instructables.getCommandRegistry();
 		TestCommand cmd = new TestCommand();
 		cmd.registerCommand(new CommandImpl() {
 			@Override

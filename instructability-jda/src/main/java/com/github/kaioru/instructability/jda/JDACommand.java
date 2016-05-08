@@ -62,7 +62,7 @@ public abstract class JDACommand extends CommandImpl implements JDACommandExecut
 		}
 	}
 
-	public void registerCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+	public JDACommand registerCommands(Object object) throws InvocationTargetException, IllegalAccessException {
 		for (Method method : object.getClass().getMethods()) {
 			if (method.isAnnotationPresent(JDAAnnotatedCommand.class)) {
 				JDAAnnotatedCommand a = method.getAnnotation(JDAAnnotatedCommand.class);
@@ -102,9 +102,10 @@ public abstract class JDACommand extends CommandImpl implements JDACommandExecut
 			if (method.isAnnotationPresent(JDAAnnotatedReference.class))
 				registerCommand((Command) method.invoke(this));
 		}
+		return this;
 	}
 
-	public void unregisterCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+	public JDACommand unregisterCommands(Object object) throws InvocationTargetException, IllegalAccessException {
 		for (Method method : object.getClass().getDeclaredMethods()) {
 			List<Command> toRemove = new ArrayList<>();
 			if (method.isAnnotationPresent(JDAAnnotatedCommand.class)) {
@@ -123,6 +124,7 @@ public abstract class JDACommand extends CommandImpl implements JDACommandExecut
 			}
 			toRemove.forEach(this::unregisterCommand);
 		}
+		return this;
 	}
 
 	public boolean allowPrivateMessage() {

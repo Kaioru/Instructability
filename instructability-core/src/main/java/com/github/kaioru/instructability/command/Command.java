@@ -24,22 +24,24 @@ public interface Command extends CommandExecutor {
 				.collect(Collectors.toList());
 	}
 
-	default void registerCommand(Command cmd) {
+	default Command registerCommand(Command cmd) {
 		getCommands().add(cmd);
 		Instructables.LOGGER.info(
 				"Registered command '{}' to '{}'",
 				cmd.getName(),
 				getName()
 		);
+		return this;
 	}
 
-	default void unregisterCommand(Command cmd) {
+	default Command unregisterCommand(Command cmd) {
 		getCommands().remove(cmd);
 		Instructables.LOGGER.info(
 				"Unregistered command '{}' from '{}'",
 				cmd.getName(),
 				getName()
 		);
+		return this;
 	}
 
 	List<CommandVerifier> getPreVerifiers();

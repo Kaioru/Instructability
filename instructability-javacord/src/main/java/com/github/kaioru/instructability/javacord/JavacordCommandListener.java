@@ -10,7 +10,7 @@ public class JavacordCommandListener implements MessageCreateListener {
 
 	@Override
 	public void onMessageCreate(DiscordAPI discordAPI, Message message) {
-		CommandRegistry reg = Instructables.getRegistry();
+		CommandRegistry reg = Instructables.getCommandRegistry();
 		String raw = message.getContent();
 		String pre = reg.getPrefix();
 

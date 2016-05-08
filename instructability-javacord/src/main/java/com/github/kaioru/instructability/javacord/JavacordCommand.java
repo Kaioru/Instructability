@@ -57,7 +57,7 @@ public abstract class JavacordCommand extends CommandImpl implements JavacordCom
 		}
 	}
 
-	public void registerCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+	public JavacordCommand registerCommands(Object object) throws InvocationTargetException, IllegalAccessException {
 		for (Method method : object.getClass().getMethods()) {
 			if (method.isAnnotationPresent(JavacordAnnotatedCommand.class)) {
 				JavacordAnnotatedCommand a = method.getAnnotation(JavacordAnnotatedCommand.class);
@@ -97,9 +97,10 @@ public abstract class JavacordCommand extends CommandImpl implements JavacordCom
 			if (method.isAnnotationPresent(JavacordAnnotatedReference.class))
 				registerCommand((Command) method.invoke(this));
 		}
+		return this;
 	}
 
-	public void unregisterCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+	public JavacordCommand unregisterCommands(Object object) throws InvocationTargetException, IllegalAccessException {
 		for (Method method : object.getClass().getDeclaredMethods()) {
 			List<Command> toRemove = new ArrayList<>();
 			if (method.isAnnotationPresent(JavacordAnnotatedCommand.class)) {
@@ -118,6 +119,7 @@ public abstract class JavacordCommand extends CommandImpl implements JavacordCom
 			}
 			toRemove.forEach(this::unregisterCommand);
 		}
+		return this;
 	}
 
 	public boolean allowPrivateMessage() {

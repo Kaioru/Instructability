@@ -10,7 +10,7 @@ public class Discord4JCommandListener implements IListener<MessageReceivedEvent>
 
 	@Override
 	public void handle(MessageReceivedEvent event) {
-		CommandRegistry reg = Instructables.getRegistry();
+		CommandRegistry reg = Instructables.getCommandRegistry();
 		String raw = event.getMessage().getContent();
 		String pre = reg.getPrefix();
 

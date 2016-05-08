@@ -12,7 +12,12 @@ public class Instructables {
 	private static CommandRegistry commandRegistry = new CommandRegistry();
 	private static PermissionRegistry permissionRegistry = new PermissionRegistry();
 
+	@Deprecated
 	public static CommandRegistry getRegistry() {
+		return commandRegistry;
+	}
+
+	public static CommandRegistry getCommandRegistry() {
 		return commandRegistry;
 	}
 

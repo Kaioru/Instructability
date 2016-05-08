@@ -63,7 +63,7 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 		}
 	}
 
-	public void registerCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+	public Discord4JCommand registerCommands(Object object) throws InvocationTargetException, IllegalAccessException {
 		for (Method method : object.getClass().getMethods()) {
 			if (method.isAnnotationPresent(Discord4JAnnotatedCommand.class)) {
 				Discord4JAnnotatedCommand a = method.getAnnotation(Discord4JAnnotatedCommand.class);
@@ -103,9 +103,10 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 			if (method.isAnnotationPresent(Discord4JAnnotatedReference.class))
 				registerCommand((Command) method.invoke(this));
 		}
+		return this;
 	}
 
-	public void unregisterCommands(Object object) throws InvocationTargetException, IllegalAccessException {
+	public Discord4JCommand unregisterCommands(Object object) throws InvocationTargetException, IllegalAccessException {
 		for (Method method : object.getClass().getDeclaredMethods()) {
 			List<Command> toRemove = new ArrayList<>();
 			if (method.isAnnotationPresent(Discord4JAnnotatedCommand.class)) {
@@ -124,6 +125,7 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 			}
 			toRemove.forEach(this::unregisterCommand);
 		}
+		return this;
 	}
 
 	public boolean allowPrivateMessage() {
