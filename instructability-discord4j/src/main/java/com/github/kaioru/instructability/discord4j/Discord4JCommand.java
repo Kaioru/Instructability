@@ -33,9 +33,9 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 					.anyMatch(s -> PermissionUtil.checkPermission(s, getPermission()))
 					|| event.getMessage().getAuthor().getRolesForGuild(event.getMessage().getGuild())
 					.stream()
-					.anyMatch(roleId ->
+					.anyMatch(role ->
 							Instructables.getPermissionRegistry()
-									.getPermissions(String.format("%s:%s", guildId, roleId))
+									.getPermissions(String.format("%s:%s", guildId, role.getID()))
 									.get()
 									.stream()
 									.anyMatch(s -> PermissionUtil.checkPermission(s, getPermission()))
