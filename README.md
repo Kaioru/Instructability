@@ -4,7 +4,7 @@ Instructability is a Commands API primarily written for Discord4J. Although, the
 ## Usage
 ### For Discord4J
 #### As a External Module
-Simply add the ```instructability-discord4j.jar``` file to the modules directory of your Discord4J bot, along with your other external Instructability modules.
+Simply add the ```instructability-discord4j.jar``` file downloaded from the [Releases Page](https://github.com/Kaioru/Instructability/releases) to the modules directory of your Discord4J bot, along with your other external Instructability modules.
 
 And viola! Everything is now done and working!
 #### In a project
