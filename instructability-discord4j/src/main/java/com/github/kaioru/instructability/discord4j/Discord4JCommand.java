@@ -1,5 +1,6 @@
 package com.github.kaioru.instructability.discord4j;
 
+import com.github.kaioru.instructability.Defaults;
 import com.github.kaioru.instructability.Instructables;
 import com.github.kaioru.instructability.command.Command;
 import com.github.kaioru.instructability.command.CommandImpl;
@@ -111,9 +112,13 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 		}
 	}
 
-	public abstract boolean allowPrivateMessage();
+	public boolean allowPrivateMessage() {
+		return Defaults.ALLOW_PRIVATE_MESSAGE;
+	}
 
-	public abstract boolean removeTriggerMessage();
+	public boolean removeTriggerMessage() {
+		return Defaults.REMOVE_TRIGGER_MESSAGE;
+	}
 
 	@Override
 	public void execute(LinkedList<String> args) throws Exception {}
