@@ -7,6 +7,7 @@ import com.github.kaioru.instructability.command.CommandImpl;
 import com.github.kaioru.instructability.discord4j.helper.Discord4JHelpCommand;
 import com.github.kaioru.instructability.util.PermissionUtil;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
+import sx.blah.discord.handle.obj.Permissions;
 import sx.blah.discord.util.MessageBuilder;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,6 +20,12 @@ import java.util.stream.Collectors;
 public abstract class Discord4JCommand extends CommandImpl implements Discord4JCommandExecutor {
 
 	public Discord4JCommand() {
+		registerPreVerifier((Discord4JCommandVerifier) (args, event, msg) ->
+				event.getMessage().getAuthor().getRolesForGuild(event.getMessage().getGuild())
+						.stream()
+						.anyMatch(role -> getDiscordPermissions()
+								.hasPermission(Permissions.generatePermissionsNumber(role.getPermissions()), true))
+		);
 		registerPreVerifier((Discord4JCommandVerifier) (args, event, msg) -> {
 			if (getPermission().equals(Defaults.PERMISSION))
 				return true;
@@ -38,8 +45,7 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 									.getPermissions(String.format("%s:%s", guildId, role.getID()))
 									.get()
 									.stream()
-									.anyMatch(s -> PermissionUtil.checkPermission(s, getPermission()))
-					);
+									.anyMatch(s -> PermissionUtil.checkPermission(s, getPermission())));
 		});
 
 		if (!allowPrivateMessage())
@@ -126,6 +132,10 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 
 	public boolean removeTriggerMessage() {
 		return Defaults.REMOVE_TRIGGER_MESSAGE;
+	}
+
+	public Permissions getDiscordPermissions() {
+		return Permissions.SEND_MESSAGES;
 	}
 
 	@Override

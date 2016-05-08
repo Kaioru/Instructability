@@ -6,6 +6,7 @@ import com.github.kaioru.instructability.command.Command;
 import com.github.kaioru.instructability.command.CommandImpl;
 import com.github.kaioru.instructability.jda.helper.JDAHelpCommand;
 import com.github.kaioru.instructability.util.PermissionUtil;
+import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import java.lang.reflect.InvocationTargetException;
@@ -18,6 +19,11 @@ import java.util.stream.Collectors;
 public abstract class JDACommand extends CommandImpl implements JDACommandExecutor {
 
 	public JDACommand() {
+		registerPreVerifier((JDACommandVerifier) (args, event) ->
+				event.getGuild().getRolesForUser(event.getAuthor())
+						.stream()
+						.anyMatch(r -> r.hasPermission(getDiscordPermission()))
+		);
 		registerPreVerifier((JDACommandVerifier) (args, event) -> {
 			if (getPermission().equals(Defaults.PERMISSION))
 				return true;
@@ -125,6 +131,10 @@ public abstract class JDACommand extends CommandImpl implements JDACommandExecut
 
 	public boolean removeTriggerMessage() {
 		return Defaults.REMOVE_TRIGGER_MESSAGE;
+	}
+
+	public Permission getDiscordPermission() {
+		return Permission.MESSAGE_WRITE;
 	}
 
 	@Override
