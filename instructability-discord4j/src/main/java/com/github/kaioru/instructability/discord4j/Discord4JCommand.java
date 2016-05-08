@@ -81,7 +81,7 @@ public abstract class Discord4JCommand extends CommandImpl implements Discord4JC
 
 					@Override
 					public void execute(LinkedList<String> args, MessageReceivedEvent event, MessageBuilder msg) throws Exception {
-						method.invoke(this, args, event, msg);
+						method.invoke(object, args, event, msg);
 					}
 
 				});

@@ -1,11 +1,16 @@
 package com.github.kaioru.instructability.util;
 
+import com.github.kaioru.instructability.Defaults;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
 public class PermissionUtil {
 
 	public static boolean checkPermission(String permission, String required) {
+		if (required.equals(Defaults.PERMISSION))
+			return true;
+
 		Iterator<String> i1 = Arrays.asList(permission.concat(".").split("\\.")).iterator();
 		Iterator<String> i2 = Arrays.asList(required.concat(".").split("\\.")).iterator();
 
