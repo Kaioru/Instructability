@@ -63,8 +63,27 @@ public class AnnotationCommands {
 }
 ```
 ``` java
-Instructables.getRegistry().registerCommands(new AnnotationCommands());
+public class AnnotatedMiddlewareCommand extends Discord4JCommand {
+	@Override
+	public String getName() {
+		return "annotated";
+	}
+
+	@Override
+	public String getDesc() {
+		return Defaults.DESCRIPTION;
+	}
+
+	@Override
+	public void execute(LinkedList<String> args, MessageReceivedEvent event, MessageBuilder msg) throws Exception {}
+}
 ```
+``` java
+AnnotatedMiddlewareCommand cmd = new AnnotatedMiddlewareCommand();
+cmd.registerCommands(new AnnotationCommands());
+Instructables.getRegistry().registerCommand(cmd);
+```
+It is currently not possible to add Annotated commands directly to the CommandRegistry. It will be fixed in the next update
 ###### Using the Builder
 ``` java
 Instructables.getRegistry()
