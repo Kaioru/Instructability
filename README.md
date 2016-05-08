@@ -101,6 +101,7 @@ Instructables.getRegistry().registerCommand(new DemoCommand());
 ## Projects using Instructability
 * [ExtendedInstructs](https://github.com/Kaioru/ExtendedInstructs) - Only supports Discord4J
 * [InstructPermissions](https://github.com/Kaioru/InstructPermissions) - Only supports Discord4J, not up-to-date
+
 ## Need help?
 I'm on Discord as @Kaioru, feel free to drop me a PM. I'm also on Discord4J's Discord channel.
 ## Contribution
