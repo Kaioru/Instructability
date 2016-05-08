@@ -97,6 +97,47 @@ public class DemoCommand extends Discord4JCommand {
 ``` java
 Instructables.getRegistry().registerCommand(new DemoCommand());
 ```
+### For Javacord and JDA
+Everything is the same for Javacord and JDA as Discord4j.
+
+Simply change ```Discord4J``` to ```Javacord``` or ```JDA``` accordingly.
+For example;
+``` java
+public class DemoCommand extends JavacordCommand {
+	@Override
+	public String getName() {
+		return "demo";
+	}
+
+	@Override
+	public String getDesc() {
+		return Defaults.DESCRIPTION;
+	}
+
+	@Override
+    public void execute(LinkedList<String> args, DiscordAPI discordAPI, Message message) throws Exception {
+        message.reply("Hello world!");
+    }
+}
+```
+``` java
+public class DemoCommand extends JDACommand {
+	@Override
+	public String getName() {
+		return "demo";
+	}
+
+	@Override
+	public String getDesc() {
+		return Defaults.DESCRIPTION;
+	}
+
+	@Override
+    public void execute(LinkedList<String> args, MessageReceivedEvent event) throws Exception {
+        event.getChannel().sendMessage("Hello world!");
+    }
+}
+```
 
 ## Projects using Instructability
 * [ExtendedInstructs](https://github.com/Kaioru/ExtendedInstructs) - Only supports Discord4J
