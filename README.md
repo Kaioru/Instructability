@@ -1,145 +1,89 @@
 # Instructability [![Build Status](https://travis-ci.org/Kaioru/Instructability.svg?branch=master)](https://travis-ci.org/Kaioru/Instructability) [![](https://jitpack.io/v/Kaioru/Instructability.svg)](https://jitpack.io/#Kaioru/Instructability)
-Instructability is a Discord4J Commands API Module written in Java 8.
-
-This Module adds a variety of ways to add Commands to your Discord4J Bot.
+Instructability is a Commands API primarily written for Discord4J. Although, there will be future support for other Discord Bot libraries.
 
 ## Usage
-### Users
-To add this Module to your bot, simply head to the [Releases](https://github.com/Kaioru/Instructabilty/releases) page and download the latest, or required, release of Instructability. Once downloaded, head to your Bot's Module directory and place the .jar file there.
+### For Discord4J
+#### As a External Module
+Simply add the ```instructability-discord4j.jar``` file to the modules directory of your Discord4J bot, along with your other external Instructability modules.
 
-Aaaaaaand you're done! Happy botting!
-### Developers
-First, add Instructability as a dependency to your project.
-#### Maven
-##### Step 1: Add the JitPack repository to your build file
-``` xml
-<repositories>
-	<repository>
-	    <id>jitpack.io</id>
-	    <url>https://jitpack.io</url>
-	</repository>
-</repositories>
-```
-##### Step 2: Add the dependency
-Change the version according to your desired version of Instructability. (Commit works as well)
-``` xml
-<dependency>
-    <groupId>com.github.Kaioru</groupId>
-    <artifactId>Instructabilty</artifactId>
-    <version>@VERSION@</version>
-</dependency>
-```
-Or simple follow the instructions on [JitPack](https://jitpack.io/#Kaioru/Instructabilty).
-#### Enabling the Module
-##### External
-Simply add the pre-built .jar file of Instructability into your bot's module directory, it's that simple!
-##### Internal
+And viola! Everything is now done and working!
+#### In a project
+##### Step 1 - Adding the dependencies
+Instructions on this step can be found on [JitPack](https://jitpack.io/#Kaioru/Instructability)
+##### Step 2 - Enabling the module
 ``` java
 IDiscordClient client = new ClientBuilder()
-				.withToken(token)
-				.login();
+                .withToken(token)
+                .login();
 
-client.getModuleLoader().loadModule(new Instructability());
+client.getModuleLoader().loadModule(new InstructabilityModule());
 ```
-#### Changing the Command prefix
-##### @mention <command>
+##### Step 4 - Changing the command Prefix
+###### @Mention
 ``` java
 client.getDispatcher().registerListener((IListener<ReadyEvent>) event -> // Ensures 'getOurUser()' is not null
         Instructables.getRegistry().setCommandPrefix(client.getOurUser().mention() + " ")
 );
 ```
-##### Everything else
+###### Everything else
 ``` java
-Instructables.getRegistry().setCommandPrefix("!"); // !<command>
-Instructables.getRegistry().setCommandPrefix("bot "); // bot <command>
+Instructables.getRegistry().setPrefix("!"); // !<command>
+Instructables.getRegistry().setPrefix("bot "); // bot <command>
 ```
-#### Adding Commands
-##### Using annotations
+##### Step 3 - Adding commands!
+###### Using Annotations
 ``` java
-public class AnnotationExample {
-
-	@AnnotatedCommand(name = "demo")
-	public void onDemoCommand(MessageReceivedEvent event, MessageBuilder msg, LinkedList<String> args) throws Exception {
-		msg.appendContent("Hello world!");
-		msg.build();
-	}
-
+public class AnnotationCommands {
+    @Discord4JAnnotatedCommand(
+            name = "demo",
+            desc = "This is a demo!"
+    )
+    public void cmdDemo(LinkedList<String> args, MessageReceivedEvent event, MessageBuilder msg) throws Exception {
+        msg.appendContent("Hello world!")
+                .build();
+    }
 }
 ```
 ``` java
-Instructables.getRegistry().registerCommands(new AnnotationExample());
+Instructables.getRegistry().registerCommands(new AnnotationCommands());
 ```
-Due to the nature of Annotations in Java, most sub-command features will not be supported in this method. It is only recommended to use this method for basic commands.
-##### Using the Builder
+###### Using the Builder
 ``` java
 Instructables.getRegistry()
-		.registerCommand(new CommandBuilder("ping") // Registers the Command
-				.alias("hello") // Adds an alias 'hello' to the Command
-				.command(new CommandBuilder("inside") // Adds a Sub-command in the Command
-						.build((event, msg, args) -> {
-							msg.appendContent("Hello from the inside!");
-							msg.build(); // Sends and Build the message
-						}))
-				.command(new CommandBuilder("perms")
-						.permission("you.need.this.permission") // Adds a permission to the Command
-						.build((event, msg, args) -> {
-							msg.appendContent("Permission found!");
-							msg.build(); // Sends and Build the message
-						}))
-				.build((event, msg, args) -> {
-					msg.appendContent("Hello from the outside!");
-					msg.build();
-				}));
+        .registerCommand(new Discord4JCommandBuilder("demo")
+        .build((args, event, msg) -> {
+            msg.appendContent("Hello world!")
+                    .build();
+        }));
 ```
-##### Using classes
+###### Using Classes
 ``` java
-public class DemoCommand extends SimpleCommand {
-
-	public DemoCommand() {
-		addHelperCommands(); // Adds the 'help' and 'alias' sub-commands to your command
-	}
-
+public class DemoCommand extends Discord4JCommand {
 	@Override
 	public String getName() {
-		return "demo"; // Name of your command
+		return "demo";
 	}
 
 	@Override
 	public String getDesc() {
-		return "This is a demo!"; // Description of your command
+		return Defaults.DESCRIPTION;
 	}
 
 	@Override
-	public void onExecute(MessageReceivedEvent event, MessageBuilder msg, LinkedList<String> args) throws Exception {
-        msg.appendContent("Hello world!");
-        msg.build();
+	public void execute(LinkedList<String> args, MessageReceivedEvent event, MessageBuilder msg) throws Exception {
+		msg.appendContent("Hello world!")
+				.build();
 	}
-
 }
 ```
 ``` java
 Instructables.getRegistry().registerCommand(new DemoCommand());
 ```
-Adding of permissions and further sub-commands is also possible with this method. However, it is not shown in the example above.
-#### Cool stuff
-```
-.testcommand "super long argument here" secondargument 'another long argument'
-```
-Commands are able to have spacings in arguments and executed as shown above.
-```
-.testcommand help
-.testcommand alias
-```
-All Commands have the help and alias sub-commands to provide information on the Command.
-To remove these Helper Commands, simply add a ```.noHelperCommands()``` method in the CommandBuilder when building the Command.
-## Projects using Instructability
-* [InstructPermissions](https://github.com/Kaioru/InstructPermissions) - Saves all your permissions data to a pretty .json file
-* [ExtendedInstructs](https://github.com/Kaioru/ExtendedInstructs) - Adds general utility commands for Instructability
+
 
 ## Need help?
-You can find me on [Discord4J's Discord Channel](https://discord.gg/0SBTUU1wZTX8X8cu) as @Kaioru
-
-## Contributing
+I'm on Discord as @Kaioru, feel free to drop me a PM. I'm also on Discord4J's Discord channel.
+## Contribution
 I'm not the best programmer out there, there will be imperfections and stuff.
 
 So feel free to contribute and help the project out!
