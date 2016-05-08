@@ -13,11 +13,28 @@ public class InstructablesTest extends TestCase {
 	@Test
 	public void test() throws Exception {
 		CommandRegistry reg = Instructables.getRegistry();
-		reg.registerCommand(new TestCommand());
+		TestCommand cmd = new TestCommand();
+		cmd.registerCommand(new CommandImpl() {
+			@Override
+			public String getName() {
+				return "inside";
+			}
+
+			@Override
+			public String getDesc() {
+				return null;
+			}
+
+			@Override
+			public void execute(LinkedList<String> args) throws Exception {
+				assertEquals("argument", args.removeFirst());
+			}
+		});
+		reg.registerCommand(cmd);
 		reg.execute("test 'first argument'");
+		reg.execute("test inside 'argument'");
 		reg.execute("non-existent");
 
-		//MultiParamCommandRegistry reg2 = new MultiParamCommandRegistry();
 		reg.registerCommand(new MultiParamCommand());
 		reg.execute("multi 'from the outside'", "hello");
 	}
@@ -40,12 +57,12 @@ public class InstructablesTest extends TestCase {
 
 		@Override
 		public String getDesc() {
-			return "Test command";
+			return null;
 		}
 
 		@Override
 		public void execute(LinkedList<String> args) throws Exception {
-			assertEquals(args.removeFirst(), "first argument");
+			assertEquals("first argument", args.removeFirst());
 		}
 
 	}
@@ -54,8 +71,12 @@ public class InstructablesTest extends TestCase {
 
 		public MultiParamCommand() {
 			registerPreVerifier((MultiParamCommandVerifier) (args, random) -> {
-				assertEquals(random, "hello");
+				assertEquals("hello", random);
 				return args.size() > 0;
+			});
+			registerPostVerifier((MultiParamCommandVerifier) (args, random) -> {
+				assertEquals(0, args.size());
+				return true;
 			});
 		}
 
@@ -66,15 +87,15 @@ public class InstructablesTest extends TestCase {
 
 		@Override
 		public String getDesc() {
-			return "Multi param test command";
+			return null;
 		}
 
 		@Override
 		public void execute(LinkedList<String> args) throws Exception {}
 
 		public void execute(LinkedList<String> args, String random) throws Exception {
-			assertEquals(random, "hello");
-			assertEquals(args.removeFirst(), "from the outside");
+			assertEquals("hello", random);
+			assertEquals("from the outside", args.removeFirst());
 		}
 
 	}
