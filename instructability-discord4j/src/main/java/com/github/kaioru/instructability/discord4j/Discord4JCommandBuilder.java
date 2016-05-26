@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Utility class designed to make command creation easier.
+ */
 public class Discord4JCommandBuilder {
 
 	private final String name;
@@ -23,6 +26,9 @@ public class Discord4JCommandBuilder {
 	private boolean allowPrivateMessage;
 	private boolean removeTriggerMessage;
 
+	/**
+	 * @param name Sets the name of the command.
+	 */
 	public Discord4JCommandBuilder(String name) {
 		this.name = name;
 		this.desc = Defaults.DESCRIPTION;
@@ -37,55 +43,104 @@ public class Discord4JCommandBuilder {
 		this.removeTriggerMessage = true;
 	}
 
+	/**
+	 * @param desc Sets the description of the command.
+	 * @return Discord4JCommandBuilder instance.
+	 */
 	public Discord4JCommandBuilder desc(String desc) {
 		this.desc = desc;
 		return this;
 	}
 
+	/**
+	 * @param permission Sets the permission of the command.
+	 * @return Discord4JCommandBuilder instance.
+	 */
 	public Discord4JCommandBuilder permission(String permission) {
 		this.permission = permission;
 		return this;
 	}
 
+	/**
+	 * @param alias Adds an alias to the command.
+	 * @return Discord4JCommandBuilder instance.
+	 */
 	public Discord4JCommandBuilder alias(String alias) {
 		this.aliases.add(alias);
 		return this;
 	}
 
+	/**
+	 * @param command Adds a subcommand to the command.
+	 * @return Discord4JCommandBuilder instance.
+	 */
 	public Discord4JCommandBuilder command(Discord4JCommand command) {
 		this.commands.add(command);
 		return this;
 	}
 
+	/**
+	 * @param commandVerifier Adds a pre-execution verifier to the command.
+	 * @return Discord4JCommandBuilder instance.
+	 */
 	public Discord4JCommandBuilder pre(Discord4JCommandVerifier commandVerifier) {
 		this.preVerifiers.add(commandVerifier);
 		return this;
 	}
 
+	/**
+	 * @param commandVerifier Adds a post-execution verifier to the command.
+	 * @return Discord4JCommandBuilder instance.
+	 */
 	public Discord4JCommandBuilder post(Discord4JCommandVerifier commandVerifier) {
 		this.postVerifiers.add(commandVerifier);
 		return this;
 	}
 
+	/**
+	 * @param permission Sets the Discord permission to the command.
+	 * @return Discord4JCommandBuilder instance.
+	 */
 	public Discord4JCommandBuilder permission(Permissions permission) {
 		this.discordPermission = permission;
 		return this;
 	}
 
+	/**
+	 * Disallow execution of command via private messages.
+	 *
+	 * @return Discord4JCommandBuilder instance.
+	 */
 	public Discord4JCommandBuilder disallowPrivateMessage() {
 		this.allowPrivateMessage = false;
 		return this;
 	}
 
+	/**
+	 * Disallow removal of trigger message after command execution.
+	 *
+	 * @return Discord4JCommandBuilder instance.
+	 */
 	public Discord4JCommandBuilder noRemoveTriggerMessage() {
 		this.removeTriggerMessage = false;
 		return this;
 	}
 
+	/**
+	 * Builds the command without any executables.
+	 *
+	 * @return The built command.
+	 */
 	public Discord4JCommand build() {
 		return build((args, event, msg) -> {});
 	}
 
+	/**
+	 * Builds the command with a executable.
+	 *
+	 * @param exe The CommandExecutor for the command.
+	 * @return The built command.
+	 */
 	public Discord4JCommand build(Discord4JCommandExecutor exe) {
 		return new Discord4JCommand() {
 

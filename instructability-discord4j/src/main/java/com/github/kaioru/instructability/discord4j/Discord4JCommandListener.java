@@ -6,6 +6,9 @@ import sx.blah.discord.api.IListener;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.util.MessageBuilder;
 
+/**
+ * A MessageReceivedEvent listener for commands.
+ */
 public class Discord4JCommandListener implements IListener<MessageReceivedEvent> {
 
 	@Override
